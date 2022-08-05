@@ -1,8 +1,17 @@
 import React from 'react';
 import { Container, AppBar, Typography, Grow, Grid } from '@mui/material';
 import Posts from './components/Posts';
+import {useDispatch} from "react-redux"
+import { getPosts } from './actions/postActions';
 
 function App() {
+
+  const dispatch = useDispatch()
+
+  React.useEffect(() => {
+    dispatch(getPosts())
+  },[dispatch])
+
   return (
     <Container maxWidth="lg">
     <AppBar position="static" color="inherit">
