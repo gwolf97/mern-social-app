@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, AppBar, Typography, Grow, Grid } from '@mui/material';
+import Posts from './components/Posts';
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
         <Container>
           <Grid container justify="space-between" alignItems="stretch" spacing={3}>
             <Grid item xs={12} sm={7}>
-              <h1>posts</h1>
+              <Posts/>
             </Grid>
             <Grid item xs={12} sm={4}>
               <h1>form</h1>
