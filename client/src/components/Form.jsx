@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import axios from "axios"
 import { TextField, Button, Typography, Paper, CircularProgress } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createPost } from '../actions/postActions';
+import { setCurrentID } from '../actions/userActions';
 
 const Form = () => {
   const [postData, setPostData] = useState({ creator: '', message: '', tags: '', file: '' });
   const [uploading, setUploading] = useState(false)
 
   const dispatch = useDispatch()
+  const currentID = useSelector((state) => state.currentID)
   const clear = () => {
+    dispatch(setCurrentID(0))
     setPostData({ creator: '', message: '', tags: '', selectedFile: '' });
   };
 

@@ -1,17 +1,18 @@
 import React from 'react';
 import { Container, AppBar, Typography, Grow, Grid } from '@mui/material';
 import Posts from './components/Posts';
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import { getPosts } from './actions/postActions';
 import Form from './components/Form';
 
 function App() {
 
   const dispatch = useDispatch()
+  const currentID = useSelector((state) => state.currentID)
 
   React.useEffect(() => {
     dispatch(getPosts())
-  },[dispatch])
+  },[currentID, dispatch])
 
   return (
     <Container maxWidth="lg">
