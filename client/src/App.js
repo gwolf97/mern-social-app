@@ -3,6 +3,7 @@ import { Container, AppBar, Typography, Grow, Grid } from '@mui/material';
 import Posts from './components/Posts';
 import {useDispatch} from "react-redux"
 import { getPosts } from './actions/postActions';
+import Form from './components/Form';
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
               <Posts/>
             </Grid>
             <Grid item xs={12} sm={4}>
-              <h1>form</h1>
+             <Form/>
             </Grid>
           </Grid>
         </Container>

@@ -1,7 +1,6 @@
 import express from "express"
 import mongoose from "mongoose"
 import asyncHandler from "express-async-handler"
-
 import PostMessage from "../models/postModal.js"
 
 const getPosts = asyncHandler(async(req,res) =>{
@@ -15,18 +14,24 @@ const getPosts = asyncHandler(async(req,res) =>{
 })
 
 const createPost = asyncHandler(async(req,res) =>{
-    const {message, selectedFile, creator, tags} = req.body;
+    const {message, creator, tags, file} = req.body;
+
+    console.log(req.body)
 
     const newPost = new PostMessage({
         message,
-        selectedFile,
         creator,
         tags,
+        file
     })
 
-    await newPost.save()
+    try {
+        await newPost.save()
+        res.status(201).json(newPost)
+    } catch (error) {
+        res.status(409).json({message: error.message})
+    }
 
-    res.status(201).json(newPost)
 })
 
 export {
