@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_REQUEST, GET_POSTS_SUCCESS } from "../constants/postConstants"
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_REQUEST, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../constants/postConstants"
 
 
 export const getPosts = () => async (dispatch) =>{
@@ -28,8 +28,6 @@ export const createPost = (postData) => async (dispatch) =>{
 
         const {data} = await axios.post("http://localhost:5000/posts", postData)
 
-        console.log(data)
-
         dispatch({
             type: CREATE_POST_SUCCESS,
             payload: data
@@ -38,6 +36,26 @@ export const createPost = (postData) => async (dispatch) =>{
     } catch (error) {
         dispatch({
             type: CREATE_POST_FAIL,
+            payload: error.message
+        })
+    }
+}
+
+
+export const updatePost = (currentID, postData) => async (dispatch) =>{
+    try {
+        dispatch({type: UPDATE_POST_REQUEST})
+
+        const {data} = await axios.patch(`http://localhost:5000/posts/${currentID}`, postData)
+
+        dispatch({
+            type: UPDATE_POST_SUCCESS,
+            payload: data
+        })
+        
+    } catch (error) {
+        dispatch({
+            type: UPDATE_POST_FAIL,
             payload: error.message
         })
     }

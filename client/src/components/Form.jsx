@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import axios from "axios"
 import { TextField, Button, Typography, Paper, CircularProgress } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { createPost } from '../actions/postActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { createPost, getPosts, updatePost } from '../actions/postActions';
 import { setCurrentID } from '../actions/userActions';
 
 const Form = () => {
@@ -10,6 +10,21 @@ const Form = () => {
   const [uploading, setUploading] = useState(false)
 
   const dispatch = useDispatch()
+  const currentID = useSelector((state) => state.currentID)
+  const post = useSelector((state) => currentID ? state.posts.posts.find(p => p._id === currentID) : null)
+
+
+  React.useEffect(( )=>{
+    if(post){
+      setPostData({
+        creator: post.creator,
+        message: post.message,
+        tags: post.tags,
+        file: post.file
+      })
+    }
+  },[currentID, post])
+
   const clear = () => {
     dispatch(setCurrentID(0))
     setPostData({ creator: '', message: '', tags: '', selectedFile: '' });
@@ -30,7 +45,6 @@ const Form = () => {
 
         const {data} = await axios.post("http://localhost:5000/upload", formData, config)
 
-
         setPostData({...postData, file: data})
         setUploading(false)
     } catch (error) {
@@ -42,9 +56,16 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
       e.preventDefault()
+      
+      if(currentID !== 0){
+        dispatch(updatePost(currentID, postData))
+        clear()
+      }else{
+        dispatch(createPost(postData))
+        clear()
+        dispatch(getPosts())
+      }
 
-      dispatch(createPost(postData))
-      clear()
   };
 
   return (
@@ -57,7 +78,6 @@ const Form = () => {
         <TextField name="tags" variant="outlined" label="Tags (coma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
         <div><input type="file" multiple={false} onChange={uploadFileHandler} /></div>
         <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
-        <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
       </form>
     </Paper>
   );

@@ -1,14 +1,18 @@
 import React from 'react';
 import { Card, CardActions, CardContent, Button, Typography, Menu, MenuItem } from '@mui/material';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { setCurrentID } from '../actions/userActions';
 
 const Post = ({ post }) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+  const dispatch = useDispatch()
 
   const handleEdit = () => {
     setAnchorEl(null)
+    dispatch(setCurrentID(post._id))
   }
 
   const handleDelete = () => {
