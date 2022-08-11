@@ -1,35 +1,58 @@
 import React from 'react';
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@mui/material';
+import { Card, CardActions, CardContent, Button, Typography, Menu, MenuItem } from '@mui/material';
 import moment from 'moment';
-
-//import ThumbUpAltIcon from '@mui/icons/ThumbUpAlt';
-//import DeleteIcon from '@mui/icons/Delete';
-//import MoreHorizIcon from '@mui/icons/MoreHoriz';
-//<Button size="small" color="primary" onClick={() => {}}><ThumbUpAltIcon fontSize="small" /> Like 0</Button>
-//<Button size="small" color="primary" onClick={() => {}}><DeleteIcon fontSize="small" /> Delete</Button>
-//<Button style={{ color: 'white' }} size="small" onClick={() => {}}><MoreHorizIcon fontSize="default" /></Button>
- //     <CardMedia />
 
 const Post = ({ post }) => {
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleEdit = () => {
+    setAnchorEl(null)
+  }
+
+  const handleDelete = () => {
+    setAnchorEl(null)
+  }
+
   return (
     <Card sx={{my:"20px"}}>
-       <img style={{width:"100px"}} src={post.file} alt="" />
-      <div  >
+      <div style={{display:"flex", justifyContent:"space-between"}}>
         <Typography variant="h6">{post.creator}</Typography>
-        <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
+        <i onClick={e => setAnchorEl(e.currentTarget)} style={{margin: "6px 5px 0 0", cursor:"pointer"}} className='fa-solid fa-ellipsis'></i>
+        <Menu
+        id="long-menu"
+        MenuListProps={{
+          'aria-labelledby': 'long-button',
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={() => setAnchorEl(null)}
+        PaperProps={{
+          style: {
+            maxHeight: "",
+            width: '100px',
+          },
+        }}
+      >
+          <MenuItem onClick={handleEdit}>
+            Edit
+          </MenuItem>
+          <MenuItem onClick={handleDelete}>
+            Delete
+          </MenuItem>
+      </Menu>
       </div>
-      <div >
-
-      </div>
-      <div >
-        <Typography variant="body2" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
-      </div>
+      <img style={{width:"100px"}} src={post.file} alt="" />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
       </CardContent>
+      <div >
+        <Typography variant="body2" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
+        <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
+      </div>
       <CardActions>
-
+      <Button size="small" color="primary" onClick={() => {}}><i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> Like 0</Button>
       </CardActions>
     </Card>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from "axios"
 import { TextField, Button, Typography, Paper, CircularProgress } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createPost } from '../actions/postActions';
 import { setCurrentID } from '../actions/userActions';
 
@@ -10,7 +10,6 @@ const Form = () => {
   const [uploading, setUploading] = useState(false)
 
   const dispatch = useDispatch()
-  const currentID = useSelector((state) => state.currentID)
   const clear = () => {
     dispatch(setCurrentID(0))
     setPostData({ creator: '', message: '', tags: '', selectedFile: '' });
@@ -49,7 +48,7 @@ const Form = () => {
   };
 
   return (
-    <Paper>
+    <Paper sx={{margin:"20px 0"}}>
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Typography variant="h6">Create a post</Typography>
         {uploading ? <CircularProgress/> : <div><img style={{width: "100px",}} src={postData.file} alt="" /></div>}
