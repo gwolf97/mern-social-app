@@ -1,13 +1,20 @@
 import React from 'react';
-import { Card, CardActions, CardContent, Button, Typography, Menu, MenuItem } from '@mui/material';
+import { Card, CardActions, CardContent, Button, Typography, Menu, MenuItem} from '@mui/material';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { setCurrentID } from '../actions/userActions';
+import DeleteModal from './DeleteModal';
+import { deletePost, getPosts } from '../actions/postActions';
 
 const Post = ({ post }) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [openModal, setOpenModal] = React.useState(false);
+ 
   const open = Boolean(anchorEl);
+  const handleOpenModal = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+
   const dispatch = useDispatch()
 
   const handleEdit = () => {
@@ -16,7 +23,12 @@ const Post = ({ post }) => {
   }
 
   const handleDelete = () => {
+    dispatch(setCurrentID(post._id))
+    dispatch(deletePost(post._id))
     setAnchorEl(null)
+    setOpenModal(false)
+    dispatch(setCurrentID(0))
+    dispatch(getPosts())
   }
 
   return (
@@ -42,9 +54,12 @@ const Post = ({ post }) => {
           <MenuItem onClick={handleEdit}>
             Edit
           </MenuItem>
-          <MenuItem onClick={handleDelete}>
+          <div>
+          <MenuItem onClick={handleOpenModal}>
             Delete
           </MenuItem>
+          <DeleteModal post={post} open={openModal} handleDelete={handleDelete} handleClose={handleCloseModal}/>
+          </div>
       </Menu>
       </div>
       <img style={{width:"100px"}} src={post.file} alt="" />
