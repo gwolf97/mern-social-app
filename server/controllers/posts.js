@@ -48,8 +48,22 @@ if(!mongoose.Types.ObjectId(_id)){
 
 })
 
+const deletePost = asyncHandler(async(req,res) =>{
+const {id:_id} = req.params
+
+if(!mongoose.Types.ObjectId(_id)){
+    return res.status(404).send("No post with that id")
+}else{
+    const deletedPost = await PostMessage.findByIdAndDelete(_id)
+
+    res.json("Delete successful")
+}
+
+})
+
 export {
     getPosts,
     createPost,
-    updatePost
+    updatePost,
+    deletePost
 }

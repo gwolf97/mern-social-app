@@ -1,10 +1,10 @@
 import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_REQUEST, GET_POSTS_SUCCESS } from "../constants/postConstants"
 
 
-export const getPostsReducer = (state = {posts: []}, action) =>{
+export const getPostsReducer = (state = {posts: {}}, action) =>{
     switch(action.type){
        case GET_POSTS_REQUEST:
-           return {loading:true, posts:[]}
+           return {loading: true, posts: []}
        case GET_POSTS_SUCCESS:
            return {loading: false, posts: action.payload}
        case GET_POSTS_FAIL:
