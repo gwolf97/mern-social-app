@@ -28,6 +28,7 @@ const Form = () => {
   const clear = () => {
     dispatch(setCurrentID(0))
     setPostData({ creator: '', message: '', tags: '', selectedFile: '' });
+    dispatch(getPosts())
   };
 
   const uploadFileHandler = async (e) => {
@@ -69,7 +70,7 @@ const Form = () => {
   };
 
   return (
-    <Paper sx={{margin:"20px 0"}}>
+    <Paper style={{color:"#2B2D2E", background:"#FEFEFE"}} sx={{margin:"20px 0"}}>
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Typography variant="h6">Create a post</Typography>
         {uploading ? <CircularProgress/> : <div><img style={{width: "100px",}} src={postData.file} alt="" /></div>}

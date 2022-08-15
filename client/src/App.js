@@ -17,7 +17,7 @@ function App() {
 
   return (
     <Container maxWidth="lg">
-    <AppBar position="static" color="inherit">
+    <AppBar style={{background:"#1B1A1D", color:"#FEFEFE"}} position="static" color="inherit">
       <Typography variant="h2" align="center">mern-social-app</Typography>
     </AppBar>
     <Grow in>

@@ -6,7 +6,7 @@ import { setCurrentID } from '../actions/userActions';
 import DeleteModal from './DeleteModal';
 import { deletePost, getPosts } from '../actions/postActions';
 
-const Post = ({ post }) => {
+const Post = ({ post, disable }) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false);
@@ -32,10 +32,10 @@ const Post = ({ post }) => {
   }
 
   return (
-    <Card sx={{my:"20px"}}>
-      <div style={{display:"flex", justifyContent:"space-between"}}>
+    <Card style={{background:"#2B2D2E", color:"#FEFEFE"}} sx={{my:"20px"}}>
+      <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0 10px 10px"}}>
         <Typography variant="h6">{post.creator}</Typography>
-        <i onClick={e => setAnchorEl(e.currentTarget)} style={{margin: "6px 5px 0 0", cursor:"pointer"}} className='fa-solid fa-ellipsis'></i>
+        <Button disabled={disable} onClick={e => setAnchorEl(e.currentTarget)} style={{color:"#FEFEFE"}}><i style={{ borderRadius:"50%", cursor:"pointer"}} className='fa-solid fa-ellipsis'></i></Button>
         <Menu
         id="long-menu"
         MenuListProps={{
@@ -48,6 +48,8 @@ const Post = ({ post }) => {
           style: {
             maxHeight: "",
             width: '100px',
+            background:"#2B2D2E", 
+            color:"#FEFEFE"
           },
         }}
       >
@@ -61,17 +63,19 @@ const Post = ({ post }) => {
           <DeleteModal post={post} open={openModal} handleDelete={handleDelete} handleClose={handleCloseModal}/>
           </div>
       </Menu>
+      </div >
+      <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+      <img style={{ maxWidth:"98%", margin:"auto", borderRadius:"1%"}} src={post.file} alt="" />
       </div>
-      <img style={{width:"100px"}} src={post.file} alt="" />
       <CardContent>
-        <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
+        <Typography style={{marginTop:"-5px"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{post.creator.toLowerCase()}</span> {post.message}</Typography>
+        <div style={{marginTop:"5px", marginBottom:"-20px"}} >
+          <Typography variant="body2" color="primary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
+          <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
+        </div>
       </CardContent>
-      <div >
-        <Typography variant="body2" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
-        <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
-      </div>
-      <CardActions>
-      <Button size="small" color="primary" onClick={() => {}}><i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> Like 0</Button>
+      <CardActions style={{marginLeft:"2px"}}>
+      <Button disabled={disable} size="small" color="primary" onClick={() => {}}><i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> Like 0</Button>
       </CardActions>
     </Card>
   );
