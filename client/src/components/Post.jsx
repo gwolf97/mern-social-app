@@ -32,7 +32,7 @@ const Post = ({ post, disable }) => {
   }
 
   return (
-    <Card style={{background:"#2B2D2E", color:"#FEFEFE"}} sx={{my:"20px"}}>
+    <Card style={{background:"#2B2D2E", color:"#FEFEFE"}}>
       <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0 10px 10px"}}>
         <Typography variant="h6">{post.creator}</Typography>
         <Button disabled={disable} onClick={e => setAnchorEl(e.currentTarget)} style={{color:"#FEFEFE"}}><i style={{ borderRadius:"50%", cursor:"pointer"}} className='fa-solid fa-ellipsis'></i></Button>

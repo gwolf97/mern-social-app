@@ -22,13 +22,21 @@ function App() {
     </AppBar>
     <Grow in>
         <Container>
-          <Grid container justify="space-between" alignItems="stretch" spacing={3}>
-            <Grid item xs={12} sm={7}>
+          <Grid container justify="center" alignItems="center" spacing={3}>
+
+          <Grid item xs={1} sm={3}></Grid>
+
+          <Grid item xs={10} sm={6} justify="center" alignItems="center" >
+            <Grid item xs={12}>
+              <Form/>
+            </Grid>
+            <Grid item xs={12}>
               <Posts/>
             </Grid>
-            <Grid item xs={12} sm={4}>
-             <Form/>
-            </Grid>
+          </Grid>
+
+          <Grid item xs={1} sm={3}></Grid>
+
           </Grid>
         </Container>
       </Grow>

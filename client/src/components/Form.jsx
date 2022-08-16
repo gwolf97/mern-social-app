@@ -13,7 +13,6 @@ const Form = () => {
   const currentID = useSelector((state) => state.currentID)
   const post = useSelector((state) => currentID ? state.posts.posts.find(p => p._id === currentID) : null)
 
-
   React.useEffect(( )=>{
     if(post){
       setPostData({
@@ -70,15 +69,21 @@ const Form = () => {
   };
 
   return (
-    <Paper style={{color:"#2B2D2E", background:"#FEFEFE"}} sx={{margin:"20px 0"}}>
+    <Paper style={{background:"#2B2D2E", color:"#FEFEFE"}} sx={{margin:"20px 0"}}>
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Typography variant="h6">Create a post</Typography>
-        {uploading ? <CircularProgress/> : <div><img style={{width: "100px",}} src={postData.file} alt="" /></div>}
-        <TextField name="creator" variant="outlined" label="Creator" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })} />
-        <TextField name="message" variant="outlined" label="Message" fullWidth multiline rows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
-        <TextField name="tags" variant="outlined" label="Tags (coma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
-        <div><input type="file" multiple={false} onChange={uploadFileHandler} /></div>
-        <Button variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
+        <TextField inputProps={{ style: { color: "#FEFEFE" } }} name="creator" variant="outlined" label="Creator" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })} />
+        {uploading ? <CircularProgress/> : <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}><img style={{ maxWidth:"98%", margin:"auto", borderRadius:"1%"}} src={postData.file} alt="" /></div>}
+        <TextField placeholder="message" inputProps={{ style: { color: "#FEFEFE" } }} style={{color:"#FEFEFE"}} name="message" variant="outlined" fullWidth multiline rows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
+        <TextField inputProps={{ style: { color: "#FEFEFE" } }} name="tags" variant="outlined" label="Tags (coma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
+        <div style={{display:"flex", justifyContent:"space-between", alignItems:"end", padding:"15px 15px"}}>
+          <div className="image-upload">
+            <label htmlFor="file-input">
+              <i style={{cursor:"pointer", color:"#408BF7", fontSize:"20px", marginRight:"10px"}} className="fa-solid fa-image"></i>
+            </label>
+            <input id="file-input" type="file" multiple={false} onChange={uploadFileHandler} />
+          </div>
+          <Button style={{width:"10%", height:"28px", color:"FEFEFE"}} variant="contained" color="primary" size="small" type="submit" fullWidth>Post</Button>
+        </div>
       </form>
     </Paper>
   );
