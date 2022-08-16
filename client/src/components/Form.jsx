@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from "axios"
-import { TextField, Button, Typography, Paper, CircularProgress } from '@mui/material';
+import { TextField, Button, Paper, CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost, getPosts, updatePost } from '../actions/postActions';
 import { setCurrentID } from '../actions/userActions';
@@ -67,6 +67,7 @@ const Form = () => {
       }
 
   };
+
 
   return (
     <Paper style={{background:"#2B2D2E", color:"#FEFEFE"}} sx={{margin:"20px 0"}}>

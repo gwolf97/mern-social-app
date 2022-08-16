@@ -10,7 +10,7 @@ const Posts = () => {
 
   return (
     !posts.length ? <CircularProgress /> : (
-      <Grid container alignItems="stretch" spacing={3}>
+      <Grid style={{marginBottom:"30px"}} container alignItems="stretch" spacing={3}>
         {posts.reverse().map((post) => (
           <Grid key={post._id} item xs={12} md={6}>
             <Post post={post}/>
