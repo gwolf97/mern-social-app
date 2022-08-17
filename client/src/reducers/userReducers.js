@@ -5,8 +5,8 @@ export const authReducer = (state = {authData: null}, action) => {
         case AUTH_REQUEST:
             return {loading: true, ...state}
         case AUTH_SUCCESS:
-            console.log(action.payload)
-            return {loading:false, authData: action.payload}
+            localStorage.setItem('profile', JSON.stringify({...action.payload}))
+            return {loading:false, ...state, authData: action.payload}
         case AUTH_FAIL:
             return {loading:false, error: action.payload}
         default:

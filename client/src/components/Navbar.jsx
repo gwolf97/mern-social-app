@@ -1,8 +1,13 @@
 import React from 'react'
 import { AppBar, Button, Toolbar} from '@mui/material';
 import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react';
 
 const Navbar = () => {
+
+const [user, setUser] = React.useState(JSON.parse(localStorage.getItem("profile")))
+
+console.log(user)
 
 const navigate = useNavigate()
 
