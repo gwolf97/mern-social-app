@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Paper, Grid, Avatar, Typography, Button} from '@mui/material';
+import jwt_decode from "jwt-decode"
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Input from '../components/Input';
 
@@ -12,6 +13,26 @@ const AuthScreen = () => {
     const handleShowPassword = () => setShowPassword(prev => !prev)
     const switchMode = () => setIsSignup(prev => !prev)
 
+    const handleCallbackResponse = async(res) => {
+        await console.log("JWT token: " + res.credential)
+        var userObject = jwt_decode(res.credential)
+        console.log(userObject)
+    }
+
+    React.useEffect(() => {
+        /* global google */
+        google.accounts.id.initialize({
+            client_id:"453306460983-2n9u0t6u7ii5b0dbefmkrhdf9ed50vdj.apps.googleusercontent.com",
+            callback: handleCallbackResponse
+        });
+        
+        google.accounts.id.renderButton(
+            document.getElementById("googleDiv"),
+            {theme:"outline", size:"medium"}
+        );
+    }, [])
+
+
     const handleChange = () => {
 
     }
@@ -21,9 +42,8 @@ const AuthScreen = () => {
     }
 
 
-
   return (
-    <Container style={{display:"flex", justifyContent:"center", alignItems:"center", height:"80vh"}} component="main" maxWidth="xs">
+    <Container style={{display:"flex", justifyContent:"center", alignItems:"center", height:"90vh"}} component="main" maxWidth="xs">
         <Paper style={{display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", padding:"20px 20px",  background:"#2B2D2E", color:"#FEFEFE"}} elevation={3}>
             <Avatar>
                 <LockOutlinedIcon/>
@@ -41,9 +61,10 @@ const AuthScreen = () => {
                     <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? "text" : "password"} handleShowPassword={handleShowPassword}/>
                     {isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password"/>}
                     <div style={{width:"100%", display:"flex", flexDirection:"column", alignItems:"center"}}>
-                        <Button style={{width:"100px", marginTop:"20px"}} type="submit" variant="contained" color="primary">
+                        <Button style={{width:"175px", margin:"20px 0", height:"35px"}} type="submit" variant="contained" color="primary">
                             {isSignup ? "Sign Up" : "Sign In"}
                         </Button>
+                            <div id="googleDiv"></div>
                         <Grid container style={{margin:"25px -15px -15px 0"}} direction="column" alignItems="end">
                             <Grid item>
                                 <Button style={{fontSize:"12px", }} onClick={switchMode}>
