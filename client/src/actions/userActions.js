@@ -1,16 +1,22 @@
-import { CURRENT_ID } from "../constants/userConstants";
+import {AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAIL} from "../constants/userConstants"
 
-export const setCurrentID = (id) => async (dispatch) =>{
+
+export const auth = (response, token) => async (dispatch) =>{
     try {
 
-        const data = id
+        dispatch({type: AUTH_REQUEST})
+
+        const data = {response: response, token: token}
 
         dispatch({
-            type: CURRENT_ID,
+            type: AUTH_SUCCESS,
             payload: data
         })
         
     } catch (error) {
-        console.log(error.message)
+        dispatch({
+            type: AUTH_FAIL,
+            payload: error.message
+        })
     }
 }

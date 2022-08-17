@@ -2,9 +2,8 @@ import React from 'react';
 import { Card, CardActions, CardContent, Button, Typography, Menu, MenuItem} from '@mui/material';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
-import { setCurrentID } from '../actions/userActions';
 import DeleteModal from './DeleteModal';
-import { deletePost, getPosts } from '../actions/postActions';
+import { deletePost, getPosts, setCurrentID } from '../actions/postActions';
 
 const Post = ({ post, disable }) => {
 

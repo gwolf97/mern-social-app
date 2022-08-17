@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios"
 import { TextField, Button, Paper, CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPost, getPosts, updatePost } from '../actions/postActions';
-import { setCurrentID } from '../actions/userActions';
+import { createPost, getPosts, updatePost, setCurrentID } from '../actions/postActions';
 
 const Form = () => {
   const [postData, setPostData] = useState({ creator: '', message: '', tags: '', file: '' });
@@ -70,7 +69,7 @@ const Form = () => {
 
 
   return (
-    <Paper style={{background:"#2B2D2E", color:"#FEFEFE"}} sx={{margin:"20px 0"}} spacing={2}>
+    <Paper style={{background:"#2B2D2E", color:"#FEFEFE"}} sx={{margin:"20px 0"}}>
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <TextField InputLabelProps={{style: { color: "#FEFEFE" } }} inputProps={{ style: { color: "#FEFEFE" } }} name="creator" variant="outlined" label="Creator" fullWidth value={postData.creator} onChange={(e) => setPostData({ ...postData, creator: e.target.value })} />
         {uploading ? <CircularProgress/> : <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}><img style={{ maxWidth:"98%", margin:"auto", borderRadius:"1%"}} src={postData.file} alt="" /></div>}

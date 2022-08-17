@@ -3,20 +3,28 @@ import { Container, Paper, Grid, Avatar, Typography, Button} from '@mui/material
 import jwt_decode from "jwt-decode"
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Input from '../components/Input';
+import { useDispatch } from 'react-redux';
+import {auth} from '../actions/userActions'
 
 const AuthScreen = () => {
 
     const [showPassword, setShowPassword] = React.useState(false)
-
     const [isSignup, setIsSignup] = React.useState(false)
+
+    const dispatch = useDispatch()
 
     const handleShowPassword = () => setShowPassword(prev => !prev)
     const switchMode = () => setIsSignup(prev => !prev)
 
     const handleCallbackResponse = async(res) => {
-        await console.log("JWT token: " + res.credential)
-        var userObject = jwt_decode(res.credential)
-        console.log(userObject)
+            var token = res.credential
+            var response = jwt_decode(res.credential)
+            
+       try {
+        dispatch(auth(response, token))
+       } catch (error) {
+            console.log(error)
+       }
     }
 
     React.useEffect(() => {
