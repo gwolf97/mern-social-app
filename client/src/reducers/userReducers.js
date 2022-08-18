@@ -1,4 +1,4 @@
-import {AUTH_FAIL, AUTH_REQUEST, AUTH_SUCCESS, LOGOUT_FAIL, LOGOUT_REQUEST, LOGOUT_SUCCESS} from "../constants/userConstants"
+import {AUTH_FAIL, AUTH_REQUEST, AUTH_SUCCESS, LOGOUT} from "../constants/userConstants"
 
 export const authReducer = (state = {authData: null}, action) => {
     switch (action.type){
@@ -6,9 +6,18 @@ export const authReducer = (state = {authData: null}, action) => {
             return {loading: true, ...state}
         case AUTH_SUCCESS:
             localStorage.setItem('profile', JSON.stringify({...action.payload}))
-            return {loading:false, ...state, authData: action.payload}
+            return {loading:false, authData: action.payload}
         case AUTH_FAIL:
             return {loading:false, error: action.payload}
+        default:
+            return state
+    }
+}
+
+export const logOutReducer = (state = {}, action) => {
+    switch (action.type){
+        case LOGOUT:
+            localStorage.clear()
         default:
             return state
     }

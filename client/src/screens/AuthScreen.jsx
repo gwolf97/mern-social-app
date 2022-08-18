@@ -1,6 +1,7 @@
 import React from 'react'
 import { Container, Paper, Grid, Avatar, Typography, Button} from '@mui/material';
 import jwt_decode from "jwt-decode"
+import { useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Input from '../components/Input';
 import { useDispatch } from 'react-redux';
@@ -12,6 +13,7 @@ const AuthScreen = () => {
     const [isSignup, setIsSignup] = React.useState(false)
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     const handleShowPassword = () => setShowPassword(prev => !prev)
     const switchMode = () => setIsSignup(prev => !prev)
@@ -22,6 +24,8 @@ const AuthScreen = () => {
             
        try {
         dispatch(auth(response, token))
+
+        navigate("/")
        } catch (error) {
             console.log(error)
        }

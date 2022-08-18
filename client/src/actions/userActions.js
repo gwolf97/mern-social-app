@@ -1,4 +1,4 @@
-import {AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAIL} from "../constants/userConstants"
+import {AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAIL, LOGOUT} from "../constants/userConstants"
 
 
 export const auth = (response, token) => async (dispatch) =>{
@@ -18,5 +18,13 @@ export const auth = (response, token) => async (dispatch) =>{
             type: AUTH_FAIL,
             payload: error.message
         })
+    }
+}
+
+export const logOut = () => async (dispatch) =>{
+    try {
+        dispatch({type: LOGOUT})
+    } catch (error) {
+        console.log(error)
     }
 }
