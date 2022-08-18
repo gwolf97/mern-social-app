@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 import asyncHandler from "express-async-handler"
 import PostMessage from "../models/postModal.js"
 
+
 const getPosts = asyncHandler(async(req,res) =>{
    try {
     const posts = await PostMessage.find()
@@ -61,9 +62,23 @@ if(!mongoose.Types.ObjectId(_id)){
 
 })
 
+const likePost = asyncHandler(async(req,res) =>{
+    const {id:_id} = req.params
+    
+    if(!mongoose.Types.ObjectId(_id)){
+        return res.status(404).send("No post with that id")
+    }else{
+        const post = await PostMessage.findById(_id)
+        const updatedPost = await PostMessage.findByIdAndUpdate(_id, {__v: post.__v + 1}, {new: true})
+    
+        res.json(updatedPost)
+    }
+})
+
 export {
     getPosts,
     createPost,
     updatePost,
-    deletePost
+    deletePost,
+    likePost
 }
