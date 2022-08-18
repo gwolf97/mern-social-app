@@ -14,4 +14,6 @@ export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const DELETE_POST_FAIL = 'DELETE_POST_FAIL';
 
+export const LIKE = "LIKE"
+
 export const CURRENT_ID = 'CURRENT_ID';

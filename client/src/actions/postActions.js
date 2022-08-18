@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, CURRENT_ID, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_REQUEST, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS } from "../constants/postConstants"
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, CURRENT_ID, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_REQUEST, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS, LIKE } from "../constants/postConstants"
 
 
 export const getPosts = () => async (dispatch) =>{
@@ -77,6 +77,20 @@ export const deletePost = (currentID) => async (dispatch) =>{
             type: DELETE_POST_FAIL,
             payload: error.message
         })
+    }
+}
+
+export const likePost = (currentID) => async (dispatch) =>{
+    try {
+        const {data} = await axios.patch(`http://localhost:5000/posts/${currentID}/like`)
+
+        dispatch({
+            type: LIKE,
+            payload: data
+        })
+
+    } catch (error) {
+        console.log(error.message)
     }
 }
 

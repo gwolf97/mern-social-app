@@ -3,7 +3,7 @@ import { Card, CardActions, CardContent, Button, Typography, Menu, MenuItem} fro
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import DeleteModal from './DeleteModal';
-import { deletePost, getPosts, setCurrentID } from '../actions/postActions';
+import { deletePost, getPosts, likePost, setCurrentID } from '../actions/postActions';
 
 const Post = ({ post, disable }) => {
 
@@ -29,6 +29,7 @@ const Post = ({ post, disable }) => {
     dispatch(setCurrentID(0))
     dispatch(getPosts())
   }
+  
 
   return (
     <Card style={{background:"#2B2D2E", color:"#FEFEFE"}}>
@@ -74,7 +75,7 @@ const Post = ({ post, disable }) => {
         </div>
       </CardContent>
       <CardActions style={{marginLeft:"2px"}}>
-      <Button disabled={disable} size="small" color="primary" onClick={() => {}}><i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> Like 0</Button>
+      <Button disabled={disable} size="small" color="primary" onClick={() => {dispatch(likePost(post._id))}}><i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> Like {`${post.__v}`}</Button>
       </CardActions>
     </Card>
   );

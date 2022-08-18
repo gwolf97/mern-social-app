@@ -7,6 +7,7 @@ const Posts = () => {
 
     const posts = useSelector((state) => state.posts.posts)
 
+  
 
   return (
     !posts.length ? <CircularProgress /> : (
