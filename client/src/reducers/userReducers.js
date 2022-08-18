@@ -9,15 +9,9 @@ export const authReducer = (state = {authData: null}, action) => {
             return {loading:false, authData: action.payload}
         case AUTH_FAIL:
             return {loading:false, error: action.payload}
-        default:
-            return state
-    }
-}
-
-export const logOutReducer = (state = {}, action) => {
-    switch (action.type){
         case LOGOUT:
             localStorage.clear()
+            return {...state, authData: null}
         default:
             return state
     }
