@@ -7,6 +7,7 @@ import mongoose from "mongoose"
 import cors from "cors"
 import postsRoutes from "./routes/postsRoutes.js"
 import uploadRoutes from "./routes/uploadRoutes.js"
+import userRoutes from "./routes/userRoutes.js"
 
 dotenv.config()
 
@@ -20,6 +21,7 @@ app.use(cors())
 
 app.use('/posts', postsRoutes)
 app.use('/upload', uploadRoutes)
+app.use('/user', userRoutes)
 
 const __dirname = path.resolve()
 app.use('/uploads', express.static(path.join(__dirname, "/uploads")))

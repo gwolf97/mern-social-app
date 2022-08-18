@@ -11,7 +11,7 @@ const AuthScreen = () => {
 
     const [showPassword, setShowPassword] = React.useState(false)
     const [isSignup, setIsSignup] = React.useState(false)
-
+    const [authFormData, setAuthFormData] = React.useState({firstName:"", lastName:"", email:"", password:"", confirmPassword:""})
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -45,12 +45,18 @@ const AuthScreen = () => {
     }, [])
 
 
-    const handleChange = () => {
-
+    const handleChange = (e) => {
+        setAuthFormData({...authFormData, [e.target.name]: e.target.value})
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault()
 
+        if(isSignup){
+           // dispatch(signup(authFormData))
+        }else{
+            //dispatch(signin(authFormData))
+        }
     }
 
 
