@@ -1,16 +1,16 @@
 import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_REQUEST, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS, CURRENT_ID, LIKE } from "../constants/postConstants"
 
 
-export const getPostsReducer = (state = {posts: {}}, action) =>{
-    switch(action.type){
-       case GET_POSTS_REQUEST:
-           return {loading: true, posts: []}
+export const getPostsReducer = (posts = [], action) =>{
+    switch(action.type){ 
        case GET_POSTS_SUCCESS:
-           return {loading: false, posts: action.payload}
+           return action.payload
        case GET_POSTS_FAIL:
-           return {loading: false, error: action.payload}
+           return action.payload
+        case LIKE:
+            return posts.reverse().map((post) => (post._id === action.payload._id ? action.payload : post));
        default:
-           return state
+           return posts
     }
    }
 
@@ -48,17 +48,6 @@ export const deletePostReducer = (state = {}, action) =>{
            return {loading: false, success: true}
        case DELETE_POST_FAIL:
            return {loading: false, error: action.payload}
-       default:
-           return state
-    }
-   }
-
-
-
-export const likeReducer = (state = {}, action) =>{
-    switch(action.type){
-        case LIKE:
-            return action.payload
        default:
            return state
     }

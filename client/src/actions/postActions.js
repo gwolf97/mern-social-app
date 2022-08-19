@@ -4,7 +4,6 @@ import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, CURRENT_ID,
 
 export const getPosts = () => async (dispatch) =>{
     try {
-        dispatch({type: GET_POSTS_REQUEST})
 
         const {data} = await axios.get("http://localhost:5000/posts")
 

@@ -5,7 +5,7 @@ import Post from './Post';
 
 const Posts = () => {
 
-    const posts = useSelector((state) => state.posts.posts)
+    const posts = useSelector((state) => state.posts)
 
   
 
