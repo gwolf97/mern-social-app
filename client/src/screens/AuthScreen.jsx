@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Input from '../components/Input';
 import { useDispatch } from 'react-redux';
-import {auth} from '../actions/userActions'
+import {auth, signIn, signUp} from '../actions/userActions'
 
 const AuthScreen = () => {
 
@@ -16,7 +16,9 @@ const AuthScreen = () => {
     const navigate = useNavigate()
 
     const handleShowPassword = () => setShowPassword(prev => !prev)
-    const switchMode = () => setIsSignup(prev => !prev)
+    const switchMode = () => {
+        setIsSignup(prev => !prev) 
+    }
 
     const handleCallbackResponse = async(res) => {
             var token = res.credential
@@ -53,9 +55,9 @@ const AuthScreen = () => {
         e.preventDefault()
 
         if(isSignup){
-           // dispatch(signup(authFormData))
+           dispatch(signUp(authFormData))
         }else{
-            //dispatch(signin(authFormData))
+            dispatch(signIn(authFormData))
         }
     }
 

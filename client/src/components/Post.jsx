@@ -11,7 +11,7 @@ const Post = ({ post, disable }) => {
   const [openModal, setOpenModal] = React.useState(false);
  
   const open = Boolean(anchorEl);
-  const handleOpenModal = () => setOpenModal(true);
+  const handleOpenModal = () => {setOpenModal(true) ; dispatch(setCurrentID(post._id))};
   const handleCloseModal = () => setOpenModal(false);
 
   const dispatch = useDispatch()
@@ -27,14 +27,13 @@ const Post = ({ post, disable }) => {
     setAnchorEl(null)
     setOpenModal(false)
     dispatch(setCurrentID(0))
-    dispatch(getPosts())
   }
   
 
   return (
     <Card style={{background:"#2B2D2E", color:"#FEFEFE"}}>
       <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0 10px 10px"}}>
-        <Typography variant="h6">{post.creator}</Typography>
+        <Typography variant="h6">{post.name.split(" ")[0]}</Typography>
         <Button disabled={disable} onClick={e => setAnchorEl(e.currentTarget)} style={{color:"#FEFEFE"}}><i style={{ borderRadius:"50%", cursor:"pointer"}} className='fa-solid fa-ellipsis'></i></Button>
         <Menu
         id="long-menu"
@@ -68,7 +67,7 @@ const Post = ({ post, disable }) => {
       <img style={{ maxWidth:"98%", margin:"auto", borderRadius:"1%"}} src={post.file} alt="" />
       </div>
       <CardContent>
-        <Typography style={{marginTop:"-5px"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{post.creator.toLowerCase()}</span> {post.message}</Typography>
+        <Typography style={{marginTop:"-5px"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{post.name.split(" ")[0].toLowerCase()}</span> {post.message}</Typography>
         <div style={{marginTop:"5px", marginBottom:"-20px"}} >
           <Typography variant="body2" color="primary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
           <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>

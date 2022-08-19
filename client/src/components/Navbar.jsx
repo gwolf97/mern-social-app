@@ -26,10 +26,8 @@ const handleLogOut = () => {
   return (
     <AppBar style={{background:"#1B1A1D", color:"#FEFEFE", display:"flex"}} position="static" color="inherit">
         <Toolbar style={{display:"flex", justifyContent:"space-around"}}>
-            <Button onClick={() => navigate("/")}><i style={{fontSize:"20px"}} className="fa-solid fa-house"></i></Button>
-            {user !== null && <Avatar src={user.response.picture}></Avatar>}
-            {user === null ? <Button onClick={() => navigate("/auth")}>Sign in</Button> : <Button onClick={handleLogOut}>Log Out</Button>}
-            
+            {user !== null && <Button disabled={user === null ? true : false} onClick={() => navigate("/")}><i style={{fontSize:"20px"}} className="fa-solid fa-house"></i></Button>}
+            {user !== null && <Avatar style={{cursor:"pointer"}} onClick={handleLogOut}></Avatar>}
         </Toolbar>
     </AppBar>
   )

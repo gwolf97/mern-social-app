@@ -15,16 +15,9 @@ const getPosts = asyncHandler(async(req,res) =>{
 })
 
 const createPost = asyncHandler(async(req,res) =>{
-    const {message, creator, tags, file} = req.body;
+    const post = req.body;
 
-    console.log(req.body)
-
-    const newPost = new PostMessage({
-        message,
-        creator,
-        tags,
-        file
-    })
+    const newPost = new PostMessage({...post, creator: req.userId, createdAt: new Date().toISOString()})
 
     try {
         await newPost.save()
@@ -64,12 +57,23 @@ if(!mongoose.Types.ObjectId(_id)){
 
 const likePost = asyncHandler(async(req,res) =>{
     const {id:_id} = req.params
+
+    if(!req.userId) return res.json({message: "Unauthenticated"})
     
     if(!mongoose.Types.ObjectId(_id)){
         return res.status(404).send("No post with that id")
     }else{
         const post = await PostMessage.findById(_id)
-        const updatedPost = await PostMessage.findByIdAndUpdate(_id, {__v: post.__v + 1}, {new: true})
+
+        const index = post.likes.findIndex((_id) => _id === String(req.userId))
+
+        if(index === -1){
+            post.likes.push(req.userId)
+        }else{
+            post.likes = post.likes.filter((_id) => _id !== String(req.userId))
+        }
+
+        const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, {new: true})
     
         res.json(updatedPost)
     }
