@@ -74,7 +74,7 @@ const Post = ({ post, disable }) => {
         </div>
       </CardContent>
       <CardActions style={{marginLeft:"2px"}}>
-      <Button disabled={disable} size="small" color="primary" onClick={() => {dispatch(likePost(post._id))}}><i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> Like {`${post.__v}`}</Button>
+      <Button disabled={disable} size="small" color="primary" onClick={() => {dispatch(likePost(post._id))}}><i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> Like {`${post.likes.length}`}</Button>
       </CardActions>
     </Card>
   );

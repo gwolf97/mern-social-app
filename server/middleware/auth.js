@@ -21,7 +21,8 @@ export const auth = asyncHandler(async (req, res, next) =>{
 
         next()
     } catch (error) {
-        console.log(error)
+       console.log(error)
+       req.error = error
     }
 })
 

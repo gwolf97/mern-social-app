@@ -32,9 +32,6 @@ export const signIn = (formData) => async (dispatch) =>{
        const {data} = await axios.post("http://localhost:5000/user/signin", formData)
 
        dispatch({type:AUTH_SUCCESS, payload: data})
-
-       const navigate = useNavigate()
-       navigate("/")
     } catch (error) {
         dispatch({type: AUTH_FAIL, payload: error.message})
     }

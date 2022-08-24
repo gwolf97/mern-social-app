@@ -6,7 +6,7 @@ export const authReducer = (state = {authData: null}, action) => {
             return {loading: true, ...state}
         case AUTH_SUCCESS:
             localStorage.setItem('profile', JSON.stringify({...action.payload}))
-            return {loading:false, authData: action.payload}
+            return {...state, loading: false, authData: action.payload}
         case AUTH_FAIL:
             return {loading:false, error: action.payload}
         case LOGOUT:

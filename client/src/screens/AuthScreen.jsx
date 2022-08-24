@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode"
 import { useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Input from '../components/Input';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {auth, signIn, signUp} from '../actions/userActions'
 
 const AuthScreen = () => {
@@ -14,6 +14,8 @@ const AuthScreen = () => {
     const [authFormData, setAuthFormData] = React.useState({firstName:"", lastName:"", email:"", password:"", confirmPassword:""})
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
+    const currentID = useSelector(state => state.currentID)
 
     const handleShowPassword = () => setShowPassword(prev => !prev)
     const switchMode = () => {
@@ -58,6 +60,7 @@ const AuthScreen = () => {
            dispatch(signUp(authFormData))
         }else{
             dispatch(signIn(authFormData))
+            currentID !== 0 ? navigate("/") : navigate("/auth")
         }
     }
 
