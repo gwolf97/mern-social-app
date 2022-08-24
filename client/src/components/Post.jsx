@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, CardActions, CardContent, Button, Typography, Menu, MenuItem} from '@mui/material';
 import moment from 'moment';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import DeleteModal from './DeleteModal';
 import { deletePost, likePost, setCurrentID } from '../actions/postActions';
 
@@ -15,6 +15,8 @@ const Post = ({ post, disable }) => {
   const handleCloseModal = () => setOpenModal(false);
 
   const dispatch = useDispatch()
+  const loggedInUserData = useSelector(state =>  state.auth.authData.result)
+  const {_id} = loggedInUserData
 
   const handleEdit = () => {
     setAnchorEl(null)
@@ -34,7 +36,7 @@ const Post = ({ post, disable }) => {
     <Card style={{background:"#2B2D2E", color:"#FEFEFE"}}>
       <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0 10px 10px"}}>
         <Typography variant="h6">{post.name.split(" ")[0].toLowerCase()}</Typography>
-        <Button disabled={disable} onClick={e => setAnchorEl(e.currentTarget)} style={{color:"#FEFEFE"}}><i style={{ borderRadius:"50%", cursor:"pointer"}} className='fa-solid fa-ellipsis'></i></Button>
+        {_id === post.creator && <Button disabled={disable} onClick={e => setAnchorEl(e.currentTarget)} style={{color:"#FEFEFE"}}><i style={{ borderRadius:"50%", cursor:"pointer"}} className='fa-solid fa-ellipsis'></i></Button>}
         <Menu
         id="long-menu"
         MenuListProps={{
@@ -74,7 +76,7 @@ const Post = ({ post, disable }) => {
         </div>
       </CardContent>
       <CardActions style={{marginLeft:"2px"}}>
-      <Button disabled={disable} size="small" color="primary" onClick={() => {dispatch(likePost(post._id))}}><i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> Like {`${post.likes.length}`}</Button>
+      <Button disabled={disable} size="small" color="primary" onClick={() => {dispatch(likePost(post._id))}}>{post.likes.indexOf(_id) > -1 ? <i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> : <i className='fa-regular fa-heart' style={{margin:"-2px 4px 0 0"}}></i>} Like {`${post.likes.length}`}</Button>
       </CardActions>
     </Card>
   );
