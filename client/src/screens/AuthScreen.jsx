@@ -22,7 +22,10 @@ const AuthScreen = () => {
         setIsSignup(prev => !prev) 
     }
 
-    const handleCallbackResponse = async(res) => {
+
+
+    React.useEffect(() => {
+        const handleCallbackResponse = async(res) => {
             var token = res.credential
             var response = jwt_decode(res.credential)
             
@@ -34,8 +37,6 @@ const AuthScreen = () => {
             console.log(error)
        }
     }
-
-    React.useEffect(() => {
         /* global google */
         google.accounts.id.initialize({
             client_id:"453306460983-2n9u0t6u7ii5b0dbefmkrhdf9ed50vdj.apps.googleusercontent.com",
@@ -46,7 +47,7 @@ const AuthScreen = () => {
             document.getElementById("googleDiv"),
             {theme:"outline", size:"medium"}
         );
-    }, [])
+    }, [dispatch, navigate])
 
 
     const handleChange = (e) => {

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import axios from "axios"
 import { TextField, Button, Paper, CircularProgress, Typography } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost, getPosts, updatePost, setCurrentID } from '../actions/postActions';
 
@@ -10,16 +9,10 @@ const Form = () => {
   const [uploading, setUploading] = useState(false)
 
   const dispatch = useDispatch()
-  const navigate = useNavigate()
   const currentID = useSelector((state) => state.currentID)
   const post = useSelector((state) => currentID ? state.posts.find(p => p._id === currentID) : null)
-  const user = JSON.parse(localStorage.getItem("profile"))
+  const user = JSON.parse(localStorage.getItem("profile")) || null
   const name = user.result.name.split(" ")[0]
-
-  React.useEffect(() => {
-    !user && navigate("/auth")
-  },[user])
-
 
   React.useEffect(( )=>{
     if(post){
@@ -78,7 +71,7 @@ const Form = () => {
   return (
     <Paper style={{background:"#2B2D2E", color:"#FEFEFE"}} sx={{margin:"20px 0"}}>
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Typography  style={{padding:"5px 0", marginLeft:"13px"}}>{name}</Typography>
+        <Typography  style={{padding:"5px 0", marginLeft:"13px"}}>{name.toLowerCase()}</Typography>
         {uploading ? <CircularProgress/> : <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}><img style={{ maxWidth:"98%", margin:"auto", borderRadius:"1%"}} src={postData.file} alt="" /></div>}
         <TextField placeholder="message" inputProps={{ style: { color: "#FEFEFE" } }} style={{color:"#FEFEFE"}} name="message" variant="outlined" fullWidth multiline rows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
         <TextField InputLabelProps={{style: { color: "#FEFEFE" } }} inputProps={{ style: { color: "#FEFEFE" } }} name="tags" variant="outlined" label="Tags (coma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />

@@ -30,7 +30,7 @@ React.useEffect(() => {
       navigate("/")
     }
 
-}, [navigate, auth.authData])
+}, [navigate, auth.authData, isTokenExpired])
 
 const handleLogOut = () => {
     dispatch(logOut())

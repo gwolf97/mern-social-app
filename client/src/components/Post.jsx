@@ -3,7 +3,7 @@ import { Card, CardActions, CardContent, Button, Typography, Menu, MenuItem} fro
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import DeleteModal from './DeleteModal';
-import { deletePost, getPosts, likePost, setCurrentID } from '../actions/postActions';
+import { deletePost, likePost, setCurrentID } from '../actions/postActions';
 
 const Post = ({ post, disable }) => {
 
@@ -33,7 +33,7 @@ const Post = ({ post, disable }) => {
   return (
     <Card style={{background:"#2B2D2E", color:"#FEFEFE"}}>
       <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0 10px 10px"}}>
-        <Typography variant="h6">{post.name.split(" ")[0]}</Typography>
+        <Typography variant="h6">{post.name.split(" ")[0].toLowerCase()}</Typography>
         <Button disabled={disable} onClick={e => setAnchorEl(e.currentTarget)} style={{color:"#FEFEFE"}}><i style={{ borderRadius:"50%", cursor:"pointer"}} className='fa-solid fa-ellipsis'></i></Button>
         <Menu
         id="long-menu"

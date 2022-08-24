@@ -4,7 +4,7 @@ import asyncHandler from "express-async-handler"
 
 export const auth = asyncHandler(async (req, res, next) =>{
     try {
-        const token = req.headers.authorization.split(" ")[1]
+        const token = req.body.headers.Authorization.split(" ")[1]
         const isCustomAuth = token.length < 500
         
         let decodedData
@@ -22,7 +22,6 @@ export const auth = asyncHandler(async (req, res, next) =>{
         next()
     } catch (error) {
        console.log(error)
-       req.error = error
     }
 })
 

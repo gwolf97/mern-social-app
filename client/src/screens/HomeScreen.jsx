@@ -4,7 +4,6 @@ import Posts from '../components/Posts';
 import {useDispatch, useSelector} from "react-redux"
 import { getPosts } from '../actions/postActions';
 import Form from '../components/Form';
-
 const HomeScreen = () => {
 
 
