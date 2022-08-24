@@ -23,6 +23,10 @@ const postSchema = mongoose.Schema({
         dfault: [],
     },
     comments:[commentSchema],
+    numComments: {
+        type: Number,
+        default: 0
+    },
     createdAt:{
         type: Date,
         default: new Date(),

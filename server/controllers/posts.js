@@ -2,6 +2,7 @@ import express from "express"
 import mongoose from "mongoose"
 import asyncHandler from "express-async-handler"
 import PostMessage from "../models/postModal.js"
+import User from "../models/userModal.js"
 
 
 const getPosts = asyncHandler(async(req,res) =>{
@@ -79,10 +80,39 @@ const likePost = asyncHandler(async(req,res) =>{
     }
 })
 
+const createComment = asyncHandler(async (req, res) => {
+    const {comment} = req.body
+    const {id:_id} = req.params
+
+    const user = await User.findById(req.userId)
+
+    const post = await PostMessage.findById(_id)
+
+    if(post){
+       const review = {
+        name: user.name,
+        comment,
+        user: req.userId
+       }
+
+       post.comments.push(review)
+
+       post.numComments = post.comments.length
+
+       await post.save()
+       res.status(201).json({message: "Comment added"})
+
+    } else {
+        res.status(404)
+        throw new Error("Post not found")
+    }
+})
+
 export {
     getPosts,
     createPost,
     updatePost,
     deletePost,
-    likePost
+    likePost,
+    createComment
 }
