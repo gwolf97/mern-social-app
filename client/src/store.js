@@ -14,7 +14,7 @@ const reducer = combineReducers({
 })
 
 const initialState = {
-    
+    auth: JSON.parse(localStorage.getItem("profile")) || null
 }
 
 const middleware = [thunk]
