@@ -89,13 +89,13 @@ const createComment = asyncHandler(async (req, res) => {
     const post = await PostMessage.findById(_id)
 
     if(post){
-       const review = {
+       const comment = {
         name: user.name,
         comment,
         user: req.userId
        }
 
-       post.comments.push(review)
+       post.comments.push(comment)
 
        post.numComments = post.comments.length
 
@@ -108,11 +108,41 @@ const createComment = asyncHandler(async (req, res) => {
     }
 })
 
+const deleteComment = asyncHandler(async (req, res) => {
+    const {id:_id, commentid:commentId} = req.params
+
+    const post = await PostMessage.findById(_id)
+
+    const index = post.comments.findIndex((comment) => comment._id.toString() === commentId)
+
+    const comment = post.comments.filter((comment) => comment._id.toString() === commentId)[0]
+
+    console.log(index, comment)
+
+    if(post){
+        if(index > -1 && comment.user.toString() === req.userId){
+            post.comments.splice(index, 1)
+
+            post.numComments = post.comments.length
+
+            await post.save()
+            res.status(201).json({message: "Comment removed"})
+        }else{
+            res.status(404)
+            throw new Error("comment not found")
+        }
+    } else {
+        res.status(404)
+        throw new Error("Post not found")
+    }
+})
+
 export {
     getPosts,
     createPost,
     updatePost,
     deletePost,
     likePost,
-    createComment
+    createComment,
+    deleteComment
 }
