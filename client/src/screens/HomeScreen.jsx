@@ -4,6 +4,7 @@ import Posts from '../components/Posts';
 import {useDispatch, useSelector} from "react-redux"
 import { getPosts } from '../actions/postActions';
 import Form from '../components/Form';
+
 const HomeScreen = () => {
 
 
@@ -11,7 +12,7 @@ const HomeScreen = () => {
   const currentID = useSelector((state) => state.currentID)
 
   React.useEffect(() => {
-    dispatch(getPosts())
+    dispatch(getPosts(0))
   },[currentID, dispatch])
 
   return (

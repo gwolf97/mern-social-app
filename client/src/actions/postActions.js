@@ -3,10 +3,10 @@ import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, CURRENT_ID,
 
 
 
-export const getPosts = () => async (dispatch) =>{
+export const getPosts = (skip) => async (dispatch) =>{
     try {
 
-        const {data} = await axios.get("http://localhost:5000/posts")
+        const {data} = await axios.get("http://localhost:5000/posts",  {params: { skip: skip } })
 
         dispatch({
             type: GET_POSTS_SUCCESS,
