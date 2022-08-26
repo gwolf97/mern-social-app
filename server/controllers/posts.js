@@ -8,7 +8,7 @@ import User from "../models/userModal.js"
 const getPosts = asyncHandler(async(req,res) =>{
 
    try {
-    const posts = await PostMessage.find().limit(3).skip(req.query.skip)
+    const posts = await PostMessage.find().limit(3).sort({ createdAt: -1 }).skip(req.query.skip)
 
     res.status(200).json(posts)
    } catch (error) {

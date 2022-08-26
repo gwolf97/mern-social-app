@@ -7,13 +7,19 @@ import Form from '../components/Form';
 
 const HomeScreen = () => {
 
+  const [skip, setSkip] = React.useState(0)
 
   const dispatch = useDispatch()
   const currentID = useSelector((state) => state.currentID)
 
   React.useEffect(() => {
-    dispatch(getPosts(0))
+    dispatch(getPosts(skip))
   },[currentID, dispatch])
+
+  const handleScroll = () =>{
+    console.log("scroll")
+  }
+
 
   return (
     <Grow in>
@@ -27,7 +33,7 @@ const HomeScreen = () => {
           <Form/>
         </Grid>
         <Grid item xs={12}>
-          <Posts/>
+          <Posts handleScroll={handleScroll}/>
         </Grid>
       </Grid>
 

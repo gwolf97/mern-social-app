@@ -3,16 +3,14 @@ import { Grid, CircularProgress } from '@mui/material';
 import {useSelector} from "react-redux"
 import Post from './Post';
 
-const Posts = () => {
+const Posts = ({handleScroll}) => {
 
-    const posts = useSelector((state) => state.posts)
-
-  
+    const posts = useSelector((state) => state.posts.posts)
 
   return (
     !posts.length ? <CircularProgress /> : (
       <Grid style={{marginBottom:"30px"}} container alignItems="stretch" spacing={3}>
-        {posts.reverse().map((post) => (
+        {posts.map((post) => (
           <Grid key={post._id} item xs={12} md={6}>
             <Post post={post}/>
           </Grid>

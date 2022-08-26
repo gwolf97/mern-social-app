@@ -1,16 +1,35 @@
 import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS, CURRENT_ID, LIKE } from "../constants/postConstants"
 
 
-export const getPostsReducer = (posts = [], action) =>{
+export const getPostsReducer = (state = {posts: []}, action) =>{
     switch(action.type){ 
        case GET_POSTS_SUCCESS:
-           return action.payload
+                const loadedPosts = action.payload
+
+                const found = state.posts.some( ai => loadedPosts.map(x => x._id).includes(ai._id) )
+
+                console.log(found)
+                console.log(loadedPosts.map(x => x._id))
+                console.log(state.posts.map(x => x._id))
+
+                if(found) {
+                    console.log("found")
+                    return{
+                        ...state,
+                    }
+                }else{
+                    return {
+                        ...state,
+                        posts: [...state.posts, ...loadedPosts],
+                    }
+                }
+
        case GET_POSTS_FAIL:
            return action.payload
         case LIKE:
-            return posts.reverse().map((post) => (post._id === action.payload._id ? action.payload : post));
+            return state.posts.map((post) => (post._id === action.payload._id ? action.payload : post));
        default:
-           return posts
+           return state
     }
    }
 
