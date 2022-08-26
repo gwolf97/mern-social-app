@@ -27,7 +27,10 @@ export const getPostsReducer = (state = {posts: []}, action) =>{
        case GET_POSTS_FAIL:
            return action.payload
         case LIKE:
-            return state.posts.map((post) => (post._id === action.payload._id ? action.payload : post));
+            return {
+                ...state,
+                posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post))
+            }
        default:
            return state
     }
