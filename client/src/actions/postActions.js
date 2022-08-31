@@ -1,12 +1,15 @@
 import axios from "axios"
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, CURRENT_ID, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS, LIKE } from "../constants/postConstants"
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, CURRENT_ID, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS, LIKE, GET_ADDED, LOAD_MORE_POSTS_FAIL, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_REQUEST, CLEAR_POSTS, SET_SKIP } from "../constants/postConstants"
 
 
 
-export const getPosts = (skip) => async (dispatch) =>{
+export const getPosts = () => async (dispatch) =>{
     try {
+        dispatch({
+            type: CLEAR_POSTS
+        })
 
-        const {data} = await axios.get("http://localhost:5000/posts",  {params: { skip: skip } })
+        const {data} = await axios.get("http://localhost:5000/posts",  {params: 0})
 
         dispatch({
             type: GET_POSTS_SUCCESS,
@@ -16,6 +19,28 @@ export const getPosts = (skip) => async (dispatch) =>{
     } catch (error) {
         dispatch({
             type: GET_POSTS_FAIL,
+            payload: error.message
+        })
+    }
+}
+
+export const loadMore = (skip) => async (dispatch) =>{
+    try {
+
+        dispatch({
+            type: LOAD_MORE_POSTS_REQUEST
+        })
+
+        const {data} = await axios.get("http://localhost:5000/posts",  {params: { skip: skip } })
+
+        dispatch({
+            type: LOAD_MORE_POSTS_SUCCESS,
+            payload: data
+        })
+        
+    } catch (error) {
+        dispatch({
+            type: LOAD_MORE_POSTS_FAIL,
             payload: error.message
         })
     }
@@ -137,6 +162,19 @@ export const setCurrentID = (id) => async (dispatch) =>{
         dispatch({
             type: CURRENT_ID,
             payload: data
+        })
+        
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+export const setSkip = (skip) => async (dispatch) =>{
+    try {
+
+        dispatch({
+            type: SET_SKIP,
+            payload: skip
         })
         
     } catch (error) {

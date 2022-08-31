@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from "axios"
 import { TextField, Button, Paper, CircularProgress, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { createPost, getPosts, updatePost, setCurrentID } from '../actions/postActions';
+import { createPost, getPosts, updatePost, setCurrentID, setSkip } from '../actions/postActions';
 
 const Form = () => {
   const [postData, setPostData] = useState({ message: '', tags: '', file: '' });
@@ -10,7 +10,7 @@ const Form = () => {
 
   const dispatch = useDispatch()
   const currentID = useSelector((state) => state.currentID)
-  const post = useSelector((state) => currentID ? state.posts.find(p => p._id === currentID) : null)
+  const post = useSelector((state) => currentID ? state.posts.posts.find(p => p._id === currentID) : null)
   const user = JSON.parse(localStorage.getItem("profile")) || null
   const name = user.result.name.split(" ")[0]
 
@@ -21,6 +21,8 @@ const Form = () => {
         tags: post.tags,
         file: post.file
       })
+    }else{
+      clear()
     }
   },[currentID, post])
 
@@ -28,6 +30,7 @@ const Form = () => {
     dispatch(setCurrentID(0))
     setPostData({ message: '', tags: '', selectedFile: '' });
     dispatch(getPosts())
+    dispatch(setSkip(3))
   };
 
   const uploadFileHandler = async (e) => {
@@ -63,7 +66,6 @@ const Form = () => {
       }else{
         dispatch(createPost({...postData, name: user.result.name}))
         clear()
-        dispatch(getPosts())
       }
   };
 

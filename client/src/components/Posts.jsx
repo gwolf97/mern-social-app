@@ -3,7 +3,7 @@ import { Grid, CircularProgress } from '@mui/material';
 import {useSelector} from "react-redux"
 import Post from './Post';
 
-const Posts = ({handleScroll}) => {
+const Posts = () => {
 
     const posts = useSelector((state) => state.posts.posts)
 

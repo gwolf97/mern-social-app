@@ -1,24 +1,26 @@
 import React from 'react';
-import { Container, Grow, Grid } from '@mui/material';
+import { Container, Grow, Grid, Button } from '@mui/material';
 import Posts from '../components/Posts';
 import {useDispatch, useSelector} from "react-redux"
-import { getPosts } from '../actions/postActions';
+import { getPosts, loadMore, setSkip } from '../actions/postActions';
 import Form from '../components/Form';
 
 const HomeScreen = () => {
 
-  const [skip, setSkip] = React.useState(0)
-
   const dispatch = useDispatch()
-  const currentID = useSelector((state) => state.currentID)
+  const skip = useSelector(state => state.skip)
 
   React.useEffect(() => {
-    dispatch(getPosts(skip))
-  },[currentID, dispatch])
+    dispatch(getPosts())
+    dispatch(setSkip(3))
+  },[ dispatch])
 
   const handleScroll = () =>{
-    console.log("scroll")
+    dispatch(setSkip(skip + 3))
+    dispatch(loadMore(skip))
   }
+
+  console.log(skip)
 
 
   return (
@@ -30,14 +32,14 @@ const HomeScreen = () => {
 
       <Grid item xs={10} sm={6} justify="center" alignItems="center" >
         <Grid item xs={12}>
-          <Form/>
+          <Form skip={skip}/>
         </Grid>
         <Grid item xs={12}>
-          <Posts handleScroll={handleScroll}/>
+          <Posts/>
         </Grid>
       </Grid>
 
-      <Grid item xs={1} sm={3}></Grid>
+      <Grid item xs={1} sm={3}><Button onClick={handleScroll}>Load more</Button></Grid>
 
       </Grid>
     </Container>

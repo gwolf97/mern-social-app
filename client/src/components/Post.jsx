@@ -3,7 +3,7 @@ import { Card, CardActions, CardContent, Button, Typography, Menu, MenuItem} fro
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import DeleteModal from './DeleteModal';
-import { deletePost, likePost, setCurrentID } from '../actions/postActions';
+import { deletePost, getPosts, likePost, setCurrentID, setSkip } from '../actions/postActions';
 
 const Post = ({ post, disable }) => {
 
@@ -29,6 +29,8 @@ const Post = ({ post, disable }) => {
     setAnchorEl(null)
     setOpenModal(false)
     dispatch(setCurrentID(0))
+    dispatch(getPosts())
+    dispatch(setSkip(3))
   }
   
 
