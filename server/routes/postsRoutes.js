@@ -8,7 +8,7 @@ import {auth} from '../middleware/auth.js'
 router.route("/").get(getPosts).post(auth, createPost)
 router.route("/:id").patch(auth, updatePost).delete(auth, deletePost)
 router.route("/:id/like").patch(auth, likePost)
-router.route("/:id/comments").post(auth, createComment).delete(auth, deleteComment)
+router.route("/:id/comments").post(auth, createComment)
 router.route("/:id/:commentid/comments").delete(auth, deleteComment)
 
 export default router

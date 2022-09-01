@@ -4,15 +4,19 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import DeleteModal from './DeleteModal';
 import { deletePost, getPosts, likePost, setCurrentID, setSkip } from '../actions/postActions';
+import CommentModal from './CommentModal';
 
 const Post = ({ post, disable }) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false);
+  const [openComment, setOpenComment] = React.useState(false)
  
   const open = Boolean(anchorEl);
   const handleOpenModal = () => {setOpenModal(true) ; dispatch(setCurrentID(post._id))};
   const handleCloseModal = () => setOpenModal(false);
+  const handleOpenComment = () => {setOpenComment(true) ; dispatch(setCurrentID(post._id))};
+  const handleCloseComment = () => setOpenComment(false);
 
   const dispatch = useDispatch()
   const loggedInUserData = useSelector(state =>  state.auth.authData.result)
@@ -35,6 +39,10 @@ const Post = ({ post, disable }) => {
     dispatch(setCurrentID(0))
     dispatch(getPosts())
     dispatch(setSkip(3))
+  }
+
+  const handleComment = () => {
+    console.log("comment")
   }
   
 
@@ -82,7 +90,11 @@ const Post = ({ post, disable }) => {
         </div>
       </CardContent>
       <CardActions style={{marginLeft:"2px"}}>
-      <Button disabled={disable} size="small" color="primary" onClick={() => {dispatch(likePost(post._id))}}>{post.likes.indexOf(_id) > -1 ? <i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> : <i className='fa-regular fa-heart' style={{margin:"-2px 4px 0 0"}}></i>} Like {`${post.likes.length}`}</Button>
+        <div style={{display:"flex", justifyContent: "space-between", width:"100%"}}>
+        <Button disabled={disable} size="small" color="primary" onClick={() => {dispatch(likePost(post._id))}}>{post.likes.indexOf(_id) > -1 ? <i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> : <i className='fa-regular fa-heart' style={{margin:"-2px 4px 0 0"}}></i>} Like {`${post.likes.length}`}</Button>
+        <Button disabled={disable} size="small" color="primary" onClick={handleOpenComment}><i className="fa-regular fa-comment" style={{margin:"-2px -12px 0 0", fontSize:"12px"}}> 3</i></Button>
+        </div>
+        <CommentModal post={post} open={openComment} handleComment={handleComment} handleClose={handleCloseComment}/>
       </CardActions>
     </Card>
   );
