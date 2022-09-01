@@ -1,5 +1,5 @@
 import axios from "axios"
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, CURRENT_ID, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS, LIKE, GET_ADDED, LOAD_MORE_POSTS_FAIL, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_REQUEST, CLEAR_POSTS, SET_SKIP } from "../constants/postConstants"
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, CURRENT_ID, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS, LIKE, GET_ADDED, LOAD_MORE_POSTS_FAIL, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_REQUEST, CLEAR_POSTS, SET_SKIP, CREATE_COMMENT } from "../constants/postConstants"
 
 
 
@@ -153,6 +153,33 @@ export const likePost = (currentID) => async (dispatch) =>{
         console.log(error.message)
     }
 }
+
+export const createComment = (postId, comment) => async (dispatch) =>{
+    try {
+
+        const token = JSON.parse(localStorage.getItem("profile")).token 
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        const {data} = await axios.post(`http://localhost:5000/posts/${postId}/comments`, comment, config)
+
+        dispatch({
+            type: CREATE_COMMENT,
+            payload: data
+        })
+
+
+
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+
 
 export const setCurrentID = (id) => async (dispatch) =>{
     try {

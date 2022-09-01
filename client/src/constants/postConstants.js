@@ -24,4 +24,6 @@ export const SET_SKIP = "SET_SKIP"
 
 export const LIKE = "LIKE"
 
+export const CREATE_COMMENT = "CREATE_COMMENT"
+
 export const CURRENT_ID = 'CURRENT_ID';

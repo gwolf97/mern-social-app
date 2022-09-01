@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { Button, TextField } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import Post from './Post';
+import { useSelector, useDispatch } from 'react-redux';
+import { createComment } from '../actions/postActions';
 
 
 const style = {
@@ -24,13 +25,20 @@ const style = {
     p: 4,
   };
   
-   function CommentModal({handleClose, open}) {
+   function CommentModal({handleClose, open, post}) {
   
-    const [commentData, setCommentData] = React.useState({comment:"", name:"", user:""})
+    const [commentData, setCommentData] = React.useState({comment:""})
+
+    const dispatch = useDispatch()
 
     const handleComment = () => {
-
+        dispatch(createComment(post._id, commentData))
+        console.log(commentData)
+        handleClose()
+        setCommentData({comment:""})
+      
     }
+    console.log(commentData)
 
     return (
       <div>
@@ -45,10 +53,10 @@ const style = {
               Drop a comment
             </Typography>
             <Box item id="modal-modal-description" sx={{ mt: 2 }}>
-                <TextField placeholder="write here..." inputProps={{ style: { color: "#FEFEFE"} , maxLength: 75}} name="comment" variant="outlined" fullWidth multiline rows={4} value={commentData.comment} onChange={(e) => setCommentData({...commentData, comment: e.target.value })} />
+                <TextField placeholder="write here..." inputProps={{ style: { color: "#FEFEFE"} , maxLength: 75}} name="comment" variant="outlined" fullWidth multiline rows={4} value={commentData.comment} onChange={(e) => setCommentData({...commentData, comment:e.target.value})} />
             </Box>
             <div style={{marginTop:"10px", display:"flex", width:"100%", justifyContent:"space-around"}}>
-            <Button variant="contained" color="error" onClick={() => {handleClose() ; setCommentData({comment:"", name:"", user:""})}}>Back</Button>
+            <Button variant="contained" color="error" onClick={() => {handleClose() ; setCommentData({comment:""})}}>Back</Button>
             <Button disabled={commentData.comment.length === 0} variant="contained" onClick={handleComment}>Comment</Button>
             </div>
           </Box>

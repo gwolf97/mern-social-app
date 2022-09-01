@@ -82,8 +82,10 @@ const likePost = asyncHandler(async(req,res) =>{
 })
 
 const createComment = asyncHandler(async (req, res) => {
-    const {comment} = req.body
+    const {comment: newComment} = req.body
     const {id:_id} = req.params
+
+    console.log(req.body, req.userId)
 
     const user = await User.findById(req.userId)
 
@@ -92,7 +94,7 @@ const createComment = asyncHandler(async (req, res) => {
     if(post){
        const comment = {
         name: user.name,
-        comment,
+        comment: newComment,
         user: req.userId
        }
 

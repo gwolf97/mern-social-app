@@ -91,7 +91,7 @@ const Post = ({ post, disable }) => {
         <Button disabled={disable} size="small" color="primary" onClick={() => {dispatch(likePost(post._id))}}>{post.likes.indexOf(_id) > -1 ? <i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> : <i className='fa-regular fa-heart' style={{margin:"-2px 4px 0 0"}}></i>} Like {`${post.likes.length}`}</Button>
         <Button disabled={disable} size="small" color="primary" onClick={handleOpenComment}><i className="fa-regular fa-comment" style={{margin:"-2px -12px 0 0", fontSize:"12px"}}> 3</i></Button>
         </div>
-        <CommentModal open={openComment} handleClose={handleCloseComment}/>
+        <CommentModal post={post} open={openComment} handleClose={handleCloseComment}/>
       </CardActions>
     </Card>
   );

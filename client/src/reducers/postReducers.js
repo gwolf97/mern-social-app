@@ -1,4 +1,4 @@
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS, CURRENT_ID, GET_ADDED, GET_REMOVED, LIKE, CLEAR_POSTS, LOAD_MORE_POSTS_REQUEST, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_FAIL, SET_SKIP } from "../constants/postConstants"
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS, CURRENT_ID, GET_ADDED, GET_REMOVED, LIKE, CLEAR_POSTS, LOAD_MORE_POSTS_REQUEST, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_FAIL, SET_SKIP, CREATE_COMMENT } from "../constants/postConstants"
 
 
 export const getPostsReducer = (state = {posts: []}, action) =>{
@@ -96,6 +96,20 @@ export const deletePostReducer = (state = {}, action) =>{
            return {loading: false, success: true}
        case DELETE_POST_FAIL:
            return {loading: false, error: action.payload}
+       default:
+           return state
+    }
+   }
+
+
+
+export const commentsReducer = (state = {comments:[]}, action) =>{
+    switch(action.type){
+        case CREATE_COMMENT:
+            return {
+                ...state,
+                comments: [action.payload, ...state.comments]
+            }
        default:
            return state
     }
