@@ -22,8 +22,6 @@ const AuthScreen = () => {
         setIsSignup(prev => !prev) 
     }
 
-
-
     React.useEffect(() => {
         const handleCallbackResponse = async(res) => {
             var token = res.credential
@@ -37,16 +35,6 @@ const AuthScreen = () => {
             console.log(error)
        }
     }
-        /* global google */
-        google.accounts.id.initialize({
-            client_id:"453306460983-2n9u0t6u7ii5b0dbefmkrhdf9ed50vdj.apps.googleusercontent.com",
-            callback: handleCallbackResponse
-        });
-        
-        google.accounts.id.renderButton(
-            document.getElementById("googleDiv"),
-            {theme:"outline", size:"medium"}
-        );
     }, [dispatch, navigate])
 
 

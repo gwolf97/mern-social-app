@@ -22,9 +22,6 @@ export const CLEAR_POSTS = "CLEAR_POSTS"
 
 export const SET_SKIP = "SET_SKIP"
 
-export const GET_ADDED = "GET_ADDED"
-export const GET_REMOVED = "GET_REMOVED"
-
 export const LIKE = "LIKE"
 
 export const CURRENT_ID = 'CURRENT_ID';
