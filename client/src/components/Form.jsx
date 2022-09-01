@@ -80,8 +80,8 @@ const Form = () => {
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Typography  style={{padding:"5px 0", marginLeft:"13px"}}>{name.toLowerCase()}</Typography>
         {uploading ? <CircularProgress/> : <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}><img style={{ maxWidth:"98%", margin:"auto", borderRadius:"1%"}} src={postData.file} alt="" /></div>}
-        <TextField placeholder="message" inputProps={{ style: { color: "#FEFEFE" } }} style={{color:"#FEFEFE"}} name="message" variant="outlined" fullWidth multiline rows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
-        <TextField InputLabelProps={{style: { color: "#FEFEFE" } }} inputProps={{ style: { color: "#FEFEFE" } }} name="tags" variant="outlined" label="Tags (coma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
+        <TextField placeholder="message" inputProps={{ style: { color: "#FEFEFE"} , maxLength: 280}} name="message" variant="outlined" fullWidth multiline rows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
+        <TextField InputLabelProps={{style: { color: "#FEFEFE" } }} inputProps={{ style: { color: "#FEFEFE" }, maxLength: 50 }} name="tags" variant="outlined" label="Tags (coma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
         <div style={{display:"flex", justifyContent:"space-between", alignItems:"end", padding:"15px 15px"}}>
           <div className="image-upload">
             <label htmlFor="file-input">

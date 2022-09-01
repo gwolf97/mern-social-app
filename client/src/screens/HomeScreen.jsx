@@ -33,8 +33,8 @@ const HomeScreen = () => {
 
       <Grid item xs={1} sm={3}></Grid>
 
-      <Grid item xs={10} sm={6} justify="center" alignItems="center" >
-        <Grid item xs={12}>
+      <Grid style={{display:"flex", flexDirection:"column", justifyContent:"center"}}  item xs={10} sm={6} justify="center" alignItems="center" >
+        <Grid item xs={12} md={9}>
           <Form skip={skip}/>
         </Grid>
         <Grid item xs={12}>

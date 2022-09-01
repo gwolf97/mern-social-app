@@ -11,9 +11,9 @@ const Posts = () => {
 
   return (
     !posts.length ? <Grid style={{display:"flex", width:"100%", justifyContent:"center", alignItems:"center"}} md={6} item><SpinnerDotted color="#408df7"/></Grid>  : (
-      <Grid style={{marginBottom:"30px"}} container alignItems="stretch" spacing={3}>
+      <Grid style={{marginBottom:"30px", display: "flex", justifyContent:"center"}} container alignItems="stretch" spacing={3}>
         {posts.map((post) => (
-          <Grid key={post._id} item xs={12} md={6}>
+          <Grid key={post._id} item xs={12} md={9}>
             <Post post={post}/>
           </Grid>
         ))}
