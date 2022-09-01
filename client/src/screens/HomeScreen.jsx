@@ -39,8 +39,8 @@ const HomeScreen = () => {
         </Grid>
         <Grid item xs={12}>
           <Posts/>
-          {loading && <Grid style={{display:"flex", width:"100%", justifyContent:"center", alignItems:"center"}} md={6} item><SpinnerDotted color="#408df7"/></Grid> }
         </Grid>
+        {loading && <Grid style={{display:"flex", width:"100%", justifyContent:"center", alignItems:"center"}} xs={12} item><SpinnerDotted color="#408df7"/></Grid> }
       </Grid>
 
       <Grid item xs={1} sm={3}></Grid>

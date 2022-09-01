@@ -69,6 +69,11 @@ const Form = () => {
       }
   };
 
+  const handleCancel = () => {
+    dispatch(setCurrentID(0))
+    setPostData({ message: '', tags: '', file: '' })
+  }
+
 
   return (
     <Paper style={{background:"#2B2D2E", color:"#FEFEFE"}} sx={{margin:"20px 0"}}>
@@ -84,6 +89,7 @@ const Form = () => {
             </label>
             <input id="file-input" type="file" multiple={false} onChange={uploadFileHandler} />
           </div>
+          {currentID !== 0 && <Button style={{width:"10%", height:"28px", color:"FEFEFE", marginRight:"-100px"}} variant="contained" color="error" size="small" fullWidth onClick={handleCancel}>Cancel</Button>}
           <Button style={{width:"10%", height:"28px", color:"FEFEFE"}} variant="contained" color="primary" size="small" type="submit" fullWidth>{currentID === 0 ? "Post" : "Edit"}</Button>
         </div>
       </form>

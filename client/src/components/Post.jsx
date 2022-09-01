@@ -21,6 +21,10 @@ const Post = ({ post, disable }) => {
   const handleEdit = () => {
     setAnchorEl(null)
     dispatch(setCurrentID(post._id))
+    window.scrollTo({
+      top: 0, 
+      behavior: 'smooth'
+    });
   }
 
   const handleDelete = () => {
