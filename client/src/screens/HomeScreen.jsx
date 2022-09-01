@@ -5,12 +5,14 @@ import {useDispatch, useSelector} from "react-redux"
 import { getPosts, loadMore, setSkip } from '../actions/postActions';
 import Form from '../components/Form';
 import { useBottomScrollListener } from 'react-bottom-scroll-listener';
+import { SpinnerDotted } from 'spinners-react';
 
 
 const HomeScreen = () => {
 
   const dispatch = useDispatch()
   const skip = useSelector(state => state.skip)
+  const {loading} = useSelector(state => state.posts)
 
   React.useEffect(() => {
     dispatch(getPosts())
@@ -37,6 +39,7 @@ const HomeScreen = () => {
         </Grid>
         <Grid item xs={12}>
           <Posts/>
+          {loading && <Grid style={{display:"flex", width:"100%", justifyContent:"center", alignItems:"center"}} md={6} item><SpinnerDotted color="#408df7"/></Grid> }
         </Grid>
       </Grid>
 

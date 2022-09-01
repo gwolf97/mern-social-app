@@ -41,6 +41,7 @@ export const getPostsReducer = (state = {posts: []}, action) =>{
             }else{
                 return {
                     ...state,
+                    loading: false,
                     posts: [...state.posts, ...loadedPosts],
                 }
             }
