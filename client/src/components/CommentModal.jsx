@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import Post from './Post';
 
@@ -24,8 +24,14 @@ const style = {
     p: 4,
   };
   
-   function CommentModal({handleClose, open, post, handleComment}) {
+   function CommentModal({handleClose, open}) {
   
+    const [commentData, setCommentData] = React.useState({comment:"", name:"", user:""})
+
+    const handleComment = () => {
+
+    }
+
     return (
       <div>
         <Modal
@@ -36,14 +42,14 @@ const style = {
         >
           <Box sx={style}>
             <Typography style={{textAlign:"center",}} id="modal-modal-title" variant="h6" component="h2">
-              Are you sure you want to delete this post?
+              Drop a comment
             </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              <Post disable={true} post={post}/>
-            </Typography>
+            <Box item id="modal-modal-description" sx={{ mt: 2 }}>
+                <TextField placeholder="write here..." inputProps={{ style: { color: "#FEFEFE"} , maxLength: 75}} name="comment" variant="outlined" fullWidth multiline rows={4} value={commentData.comment} onChange={(e) => setCommentData({...commentData, comment: e.target.value })} />
+            </Box>
             <div style={{marginTop:"10px", display:"flex", width:"100%", justifyContent:"space-around"}}>
-            <Button variant="contained" color="error" onClick={handleClose}>Cancel</Button>
-            <Button variant="contained" onClick={handleComment}>Comment</Button>
+            <Button variant="contained" color="error" onClick={() => {handleClose() ; setCommentData({comment:"", name:"", user:""})}}>Back</Button>
+            <Button disabled={commentData.comment.length === 0} variant="contained" onClick={handleComment}>Comment</Button>
             </div>
           </Box>
         </Modal>

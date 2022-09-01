@@ -15,8 +15,8 @@ const Post = ({ post, disable }) => {
   const open = Boolean(anchorEl);
   const handleOpenModal = () => {setOpenModal(true) ; dispatch(setCurrentID(post._id))};
   const handleCloseModal = () => setOpenModal(false);
-  const handleOpenComment = () => {setOpenComment(true) ; dispatch(setCurrentID(post._id))};
-  const handleCloseComment = () => setOpenComment(false);
+  const handleOpenComment = () => {setOpenComment(true)};
+  const handleCloseComment = () => {setOpenComment(false)}
 
   const dispatch = useDispatch()
   const loggedInUserData = useSelector(state =>  state.auth.authData.result)
@@ -41,9 +41,6 @@ const Post = ({ post, disable }) => {
     dispatch(setSkip(3))
   }
 
-  const handleComment = () => {
-    console.log("comment")
-  }
   
 
   return (
@@ -94,7 +91,7 @@ const Post = ({ post, disable }) => {
         <Button disabled={disable} size="small" color="primary" onClick={() => {dispatch(likePost(post._id))}}>{post.likes.indexOf(_id) > -1 ? <i className="fa-solid fa-heart" style={{margin:"-2px 4px 0 0"}}></i> : <i className='fa-regular fa-heart' style={{margin:"-2px 4px 0 0"}}></i>} Like {`${post.likes.length}`}</Button>
         <Button disabled={disable} size="small" color="primary" onClick={handleOpenComment}><i className="fa-regular fa-comment" style={{margin:"-2px -12px 0 0", fontSize:"12px"}}> 3</i></Button>
         </div>
-        <CommentModal post={post} open={openComment} handleComment={handleComment} handleClose={handleCloseComment}/>
+        <CommentModal open={openComment} handleClose={handleCloseComment}/>
       </CardActions>
     </Card>
   );
