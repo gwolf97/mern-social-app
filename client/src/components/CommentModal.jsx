@@ -33,9 +33,15 @@ const style = {
 
     const dispatch = useDispatch()
 
+    const loggedInUserData = useSelector(state =>  state.auth.authData.result)
+
     const handleComment = () => {
         dispatch(createComment(post._id, commentData))
         setCommentData({comment:""})
+    }
+
+    const handleDelete = () => {
+        console.log("delete")
     }
 
     return (
@@ -51,8 +57,9 @@ const style = {
             <Typography style={{margin:"-5px 0 10px 0", textAlign:"left"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{post.name.split(" ")[0].toLowerCase()}</span> {post.message}</Typography>
             </Typography>
             {comments.map(com =>
-                <Box style={{display:"flex", justifyContent:"start", flexDirection:"column", width:"100%"}} key={`${com} ${comments.indexOf(com)}`} item>
+                <Box style={{display:"flex", justifyContent:"space-between", width:"100%"}} key={`${com} ${comments.indexOf(com)}`} item>
                      <Typography style={{marginTop:"2px"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{com.name.split(" ")[0].toLowerCase()}</span> {com.comment}</Typography>
+                    {com.user === loggedInUserData._id && <Typography style={{marginTop:"2px", fontSize:"11px", cursor:"pointer"}} onClick={handleDelete}>delete</Typography>}
                 </Box>
             )}
             <Box style={{width:"100%"}} item id="modal-modal-description" sx={{ mt: 2 }}>
