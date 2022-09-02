@@ -126,8 +126,8 @@ const deleteComment = asyncHandler(async (req, res) => {
 
             post.numComments = post.comments.length
 
-            await post.save()
-            res.status(201).json({message: "Comment removed"})
+            const postWithRemovedComment = await post.save()
+            res.status(201).json(postWithRemovedComment)
         }else{
             res.status(404)
             throw new Error("comment not found")

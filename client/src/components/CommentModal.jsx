@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import { Button, TextField } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import { useSelector, useDispatch } from 'react-redux';
-import { createComment } from '../actions/postActions';
+import { createComment, deleteComment } from '../actions/postActions';
 
 
 const style = {
@@ -40,8 +40,8 @@ const style = {
         setCommentData({comment:""})
     }
 
-    const handleDelete = () => {
-        console.log("delete")
+    const handleDelete = (commentId) => {
+        dispatch(deleteComment(post._id, commentId))
     }
 
     return (
@@ -59,7 +59,7 @@ const style = {
             {comments.map(com =>
                 <Box style={{display:"flex", justifyContent:"space-between", width:"100%"}} key={`${com} ${comments.indexOf(com)}`} item>
                      <Typography style={{marginTop:"2px"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{com.name.split(" ")[0].toLowerCase()}</span> {com.comment}</Typography>
-                    {com.user === loggedInUserData._id && <Typography style={{marginTop:"2px", fontSize:"11px", cursor:"pointer"}} onClick={handleDelete}>delete</Typography>}
+                    {com.user === loggedInUserData._id && <Typography style={{marginTop:"2px", fontSize:"11px", cursor:"pointer"}} onClick={() => handleDelete(com._id)}>delete</Typography>}
                 </Box>
             )}
             <Box style={{width:"100%"}} item id="modal-modal-description" sx={{ mt: 2 }}>

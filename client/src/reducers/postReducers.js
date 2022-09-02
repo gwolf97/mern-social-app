@@ -1,4 +1,4 @@
-import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS, CURRENT_ID, GET_ADDED, GET_REMOVED, LIKE, CLEAR_POSTS, LOAD_MORE_POSTS_REQUEST, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_FAIL, SET_SKIP, CREATE_COMMENT } from "../constants/postConstants"
+import { CREATE_POST_FAIL, CREATE_POST_REQUEST, CREATE_POST_SUCCESS, DELETE_POST_FAIL, DELETE_POST_REQUEST, DELETE_POST_SUCCESS, GET_POSTS_FAIL, GET_POSTS_SUCCESS, UPDATE_POST_FAIL, UPDATE_POST_REQUEST, UPDATE_POST_SUCCESS, CURRENT_ID, GET_ADDED, GET_REMOVED, LIKE, CLEAR_POSTS, LOAD_MORE_POSTS_REQUEST, LOAD_MORE_POSTS_SUCCESS, LOAD_MORE_POSTS_FAIL, SET_SKIP, CREATE_COMMENT, DELETE_COMMENT } from "../constants/postConstants"
 
 
 export const getPostsReducer = (state = {posts: []}, action) =>{
@@ -59,6 +59,15 @@ export const getPostsReducer = (state = {posts: []}, action) =>{
                     return{
                         ...state,
                         posts: state.posts.map(post => post._id === postWithNewComment._id ? postWithNewComment : post)
+                    }
+                }
+        case DELETE_COMMENT:
+                {
+                    const postWithRemovedComment = action.payload
+
+                    return{
+                        ...state,
+                        posts: state.posts.map(post => post._id === postWithRemovedComment._id ? postWithRemovedComment : post)
                     }
                 }
         case LIKE:
