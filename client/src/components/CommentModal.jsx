@@ -1,29 +1,12 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
+import moment from 'moment';
 import Typography from '@mui/material/Typography';
-import { Button, TextField } from '@mui/material';
+import { Button, DialogActions, DialogContent, DialogContentText, TextField } from '@mui/material';
 import Modal from '@mui/material/Modal';
+import Dialog from '@mui/material/Dialog';
 import { useSelector, useDispatch } from 'react-redux';
 import { createComment, deleteComment } from '../actions/postActions';
-
-
-const style = {
-    position: 'absolute',
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width:"18rem",
-    background:"#2B2D2E", 
-    color:"#FEFEFE",
-    border: '1px solid #1B1A1D',
-    borderRadius:"3%",
-    boxShadow: 24,
-    p: 4,
-  };
   
    function CommentModal({handleClose, open, post}) {
   
@@ -46,31 +29,47 @@ const style = {
 
     return (
       <div>
-        <Modal
+        <Dialog
           open={open}
           onClose={handleClose}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
+          scroll="paper"
+          aria-labelledby="modal-dialog-title"
+          aria-describedby="modal-dialog-description"
+          PaperProps={{
+            style: {
+                background:"#2B2D2E", 
+                color:"#FEFEFE",
+                boxShadow: 24,
+            },}}
+          style={{
+            position:"aboslute",
+            display:"flex",
+            flexDirection:"column",
+            justifyContent:"center",
+            alignItems:"center",
+            maxWidth:"500px",
+            margin:"auto"
+        }}
         >
-          <Box sx={style}>
-            <Typography style={{textAlign:"center",}} id="modal-modal-title" variant="h6" component="h2">
-            <Typography style={{margin:"-5px 0 10px 0", textAlign:"left"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{post.name.split(" ")[0].toLowerCase()}</span> {post.message}</Typography>
-            </Typography>
+          <DialogContent>
+            <div style={{textAlign:"center", maxWidth:"70vw"}} id="modal-modal-title" variant="h6" component="h2">
+            <p style={{margin:"-5px 0 15px 0", textAlign:"left"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{post.name.split(" ")[0].toLowerCase()}</span> {post.message}</p>
+            </div>
             {comments.map(com =>
-                <Box style={{display:"flex", justifyContent:"space-between", width:"100%"}} key={`${com} ${comments.indexOf(com)}`} item>
-                     <Typography style={{marginTop:"2px"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{com.name.split(" ")[0].toLowerCase()}</span> {com.comment}</Typography>
-                    {com.user === loggedInUserData._id && <Typography style={{marginTop:"2px", fontSize:"11px", cursor:"pointer"}} onClick={() => handleDelete(com._id)}>delete</Typography>}
-                </Box>
+                <p style={{display:"flex", justifyContent:"space-between", width:"100%", marginBottom:"8px"}} key={`${com} ${comments.indexOf(com)}`} >
+                     <p style={{marginTop:"2px", maxWidth:"330px"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{com.name.split(" ")[0].toLowerCase()}</span> {com.comment} <br/> <span style={{fontSize:"11px", opacity:"0.6"}}>{moment(com.createdAt).fromNow()}</span> </p>
+                    {com.user === loggedInUserData._id && <Typography style={{marginTop:"2px", fontSize:"11px", cursor:"pointer", opacity:"0.6"}} onClick={() => handleDelete(com._id)}>delete</Typography>}
+                </p>
             )}
-            <Box style={{width:"100%"}} item id="modal-modal-description" sx={{ mt: 2 }}>
-                <TextField placeholder="write here..." inputProps={{ style: { color: "#FEFEFE"} , maxLength: 75}} name="comment" variant="outlined" fullWidth multiline rows={4} value={commentData.comment} onChange={(e) => setCommentData({...commentData, comment:e.target.value})} />
-            </Box>
+            <DialogContent style={{maxWidth:"80vw"}}  id="modal-modal-description" sx={{ mt: 2 }}>
+                <TextField placeholder="write here..." inputProps={{ style: { color: "#FEFEFE"} , maxLength: 75}} name="comment" variant="outlined" fullWidth multiline maxRows={4} value={commentData.comment} onChange={(e) => setCommentData({...commentData, comment:e.target.value})} />
+            </DialogContent>
             <div style={{marginTop:"10px", display:"flex", width:"100%", justifyContent:"space-around"}}>
             <Button variant="contained" color="error" onClick={() => {handleClose() ; setCommentData({comment:""})}}>Back</Button>
             <Button disabled={commentData.comment.length === 0} variant="contained" onClick={handleComment}>Comment</Button>
             </div>
-          </Box>
-        </Modal>
+          </DialogContent>
+        </Dialog>
       </div>
     );
   }
