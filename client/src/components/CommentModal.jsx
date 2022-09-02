@@ -29,16 +29,14 @@ const style = {
   
     const [commentData, setCommentData] = React.useState({comment:""})
 
+    const comments = post.comments
+
     const dispatch = useDispatch()
 
     const handleComment = () => {
         dispatch(createComment(post._id, commentData))
-        console.log(commentData)
-        handleClose()
         setCommentData({comment:""})
-      
     }
-    console.log(commentData)
 
     return (
       <div>
@@ -50,9 +48,14 @@ const style = {
         >
           <Box sx={style}>
             <Typography style={{textAlign:"center",}} id="modal-modal-title" variant="h6" component="h2">
-              Drop a comment
+            <Typography style={{margin:"-5px 0 10px 0", textAlign:"left"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{post.name.split(" ")[0].toLowerCase()}</span> {post.message}</Typography>
             </Typography>
-            <Box item id="modal-modal-description" sx={{ mt: 2 }}>
+            {comments.map(com =>
+                <Box style={{display:"flex", justifyContent:"start", flexDirection:"column", width:"100%"}} key={`${com} ${comments.indexOf(com)}`} item>
+                     <Typography style={{marginTop:"2px"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{com.name.split(" ")[0].toLowerCase()}</span> {com.comment}</Typography>
+                </Box>
+            )}
+            <Box style={{width:"100%"}} item id="modal-modal-description" sx={{ mt: 2 }}>
                 <TextField placeholder="write here..." inputProps={{ style: { color: "#FEFEFE"} , maxLength: 75}} name="comment" variant="outlined" fullWidth multiline rows={4} value={commentData.comment} onChange={(e) => setCommentData({...commentData, comment:e.target.value})} />
             </Box>
             <div style={{marginTop:"10px", display:"flex", width:"100%", justifyContent:"space-around"}}>

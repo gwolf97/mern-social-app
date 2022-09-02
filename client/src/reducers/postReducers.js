@@ -52,6 +52,15 @@ export const getPostsReducer = (state = {posts: []}, action) =>{
                 loading: false,
                 error: action.payload
             }
+        case CREATE_COMMENT:
+                {
+                    const postWithNewComment = action.payload
+
+                    return{
+                        ...state,
+                        posts: state.posts.map(post => post._id === postWithNewComment._id ? postWithNewComment : post)
+                    }
+                }
         case LIKE:
             return {
                 ...state,
@@ -96,20 +105,6 @@ export const deletePostReducer = (state = {}, action) =>{
            return {loading: false, success: true}
        case DELETE_POST_FAIL:
            return {loading: false, error: action.payload}
-       default:
-           return state
-    }
-   }
-
-
-
-export const commentsReducer = (state = {comments:[]}, action) =>{
-    switch(action.type){
-        case CREATE_COMMENT:
-            return {
-                ...state,
-                comments: [action.payload, ...state.comments]
-            }
        default:
            return state
     }

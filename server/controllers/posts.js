@@ -102,8 +102,8 @@ const createComment = asyncHandler(async (req, res) => {
 
        post.numComments = post.comments.length
 
-       await post.save()
-       res.status(201).json(comment)
+       const postWithNewComment = await post.save()
+       res.status(201).json(postWithNewComment)
 
     } else {
         res.status(404)
