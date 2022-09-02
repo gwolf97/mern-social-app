@@ -120,8 +120,6 @@ const deleteComment = asyncHandler(async (req, res) => {
 
     const comment = post.comments.filter((comment) => comment._id.toString() === commentId)[0]
 
-    console.log(index, comment)
-
     if(post){
         if(index > -1 && comment.user.toString() === req.userId){
             post.comments.splice(index, 1)

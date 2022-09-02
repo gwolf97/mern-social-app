@@ -26,6 +26,13 @@ React.useEffect(() => {
 
     if(auth.authData === null){
       navigate("/auth")
+      return
+    }else if(auth.success){
+      navigate("/")
+      return
+    }else if(auth.error){
+      navigate("/auth")
+      return
     }else{
       navigate("/")
     }

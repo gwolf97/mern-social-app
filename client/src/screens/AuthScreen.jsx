@@ -15,8 +15,6 @@ const AuthScreen = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const currentID = useSelector(state => state.currentID)
-
     const handleShowPassword = () => setShowPassword(prev => !prev)
     const switchMode = () => {
         setIsSignup(prev => !prev) 
@@ -32,6 +30,7 @@ const AuthScreen = () => {
 
         navigate("/")
        } catch (error) {
+            navigate("/auth")
             console.log(error)
        }
     }
@@ -49,7 +48,6 @@ const AuthScreen = () => {
            dispatch(signUp(authFormData))
         }else{
             dispatch(signIn(authFormData))
-            currentID !== 0 ? navigate("/") : navigate("/auth")
         }
     }
 
