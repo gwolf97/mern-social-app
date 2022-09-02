@@ -46,9 +46,6 @@ export const signUp = (formData) => async (dispatch) =>{
 
        dispatch({type:AUTH_SUCCESS, payload: data})
 
-       const navigate = useNavigate()
-       navigate("/")
-
     } catch (error) {
         dispatch({type: AUTH_FAIL, payload: error.message})
     }

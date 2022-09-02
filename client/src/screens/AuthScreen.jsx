@@ -11,7 +11,7 @@ const AuthScreen = () => {
 
     const [showPassword, setShowPassword] = React.useState(false)
     const [isSignup, setIsSignup] = React.useState(false)
-    const [authFormData, setAuthFormData] = React.useState({firstName:"", lastName:"", email:"", password:"", confirmPassword:""})
+    const [authFormData, setAuthFormData] = React.useState({userName:"", email:"", password:"", confirmPassword:""})
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -63,8 +63,7 @@ const AuthScreen = () => {
                 <Grid container spacing={2}>
                     { isSignup && (
                             <>
-                                <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half/>
-                                <Input name="lastName" label="Last Name" handleChange={handleChange} half/>
+                                <Input name="userName" label="Username" handleChange={handleChange} autoFocus/>
                             </>
                         )}
                     <Input name="email" label="Email Address" handleChange={handleChange} type="email" />

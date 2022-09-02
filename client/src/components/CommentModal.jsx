@@ -56,10 +56,10 @@ import { createComment, deleteComment } from '../actions/postActions';
             <p style={{margin:"-5px 0 15px 0", textAlign:"left"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{post.name.split(" ")[0].toLowerCase()}</span> {post.message}</p>
             </div>
             {comments.map(com =>
-                <p style={{display:"flex", justifyContent:"space-between", width:"100%", marginBottom:"8px"}} key={`${com} ${comments.indexOf(com)}`} >
+                <div style={{display:"flex", justifyContent:"space-between", width:"100%", marginBottom:"8px"}} key={`${com} ${comments.indexOf(com)}`} >
                      <p style={{marginTop:"2px", maxWidth:"330px"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{com.name.split(" ")[0].toLowerCase()}</span> {com.comment} <br/> <span style={{fontSize:"11px", opacity:"0.6"}}>{moment(com.createdAt).fromNow()}</span> </p>
                     {com.user === loggedInUserData._id && <Typography style={{marginTop:"2px", fontSize:"11px", cursor:"pointer", opacity:"0.6"}} onClick={() => handleDelete(com._id)}>delete</Typography>}
-                </p>
+                </div>
             )}
             <DialogContent style={{maxWidth:"80vw"}}  id="modal-modal-description" sx={{ mt: 2 }}>
                 <TextField placeholder="write here..." inputProps={{ style: { color: "#FEFEFE"} , maxLength: 75}} name="comment" variant="outlined" fullWidth multiline maxRows={4} value={commentData.comment} onChange={(e) => setCommentData({...commentData, comment:e.target.value})} />
