@@ -29,9 +29,6 @@ const id = open ? 'simple-popover' : undefined;
 const isTokenExpired = user === null ? "no token" : isExpired(user.token) 
 
 const auth = useSelector(state => state.auth)
-const params = useParams()
-
-console.log(params)
 
 const navigate = useNavigate()
 const dispatch = useDispatch()
@@ -46,8 +43,6 @@ React.useEffect(() => {
     if(auth.authData === null){
       navigate("/auth")
       return
-    }else if(params){
-      setProfileOpen(true)
     }else if(profileOpen){
       return
     }else if(auth.success){
