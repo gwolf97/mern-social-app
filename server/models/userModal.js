@@ -16,6 +16,10 @@ const userSchema = mongoose.Schema({
     id: {
         type: String,
     },
+    file:{
+        type: String,
+        default: ""
+    },
 
 
 })

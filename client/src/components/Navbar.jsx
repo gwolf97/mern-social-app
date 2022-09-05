@@ -49,6 +49,8 @@ React.useEffect(() => {
     }else if(auth.error){
       navigate("/auth")
       return
+    }else{
+      navigate("/")
     }
 
 }, [navigate, auth.authData, isTokenExpired])
