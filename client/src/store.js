@@ -2,7 +2,7 @@ import {createStore, combineReducers, applyMiddleware, } from "redux"
 import thunk from "redux-thunk"
 import {composeWithDevTools} from "redux-devtools-extension"
 import { getPostsReducer, createPostReducer, updatePostReducer, deletePostReducer, currentIDReducer, skipReducer } from "./reducers/postReducers"
-import { authReducer } from "./reducers/userReducers"
+import { authReducer, profileReducer } from "./reducers/userReducers"
 
 const reducer = combineReducers({
     posts: getPostsReducer,
@@ -10,6 +10,7 @@ const reducer = combineReducers({
     updatePost: updatePostReducer,
     deletePost: deletePostReducer,
     currentID: currentIDReducer,
+    profile: profileReducer,
     skip: skipReducer,
     auth: authReducer,
 })

@@ -1,6 +1,6 @@
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
-import {AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAIL, LOGOUT} from "../constants/userConstants"
+import {AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAIL, LOGOUT, GET_USER, UPDATE_USER_FILE} from "../constants/userConstants"
 
 
 
@@ -56,5 +56,44 @@ export const logOut = () => async (dispatch) =>{
         dispatch({type: LOGOUT})
     } catch (error) {
         console.log(error)
+    }
+}
+
+
+export const getUser = (id) => async (dispatch) =>{
+    try {
+
+        const {data} = await axios.get(`http://localhost:5000/user/${id}`)
+
+        dispatch({
+            type: GET_USER,
+            payload: data
+        })
+        
+    } catch (error) {
+        console.log(error.message)
+    }
+}
+
+export const updateUserFile = (file) => async (dispatch) =>{
+    try {
+
+        const token = JSON.parse(localStorage.getItem("profile")).token 
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        const {data} = await axios.patch(`http://localhost:5000/user/profilepic`, {file: file}, config)
+
+        dispatch({
+            type: UPDATE_USER_FILE,
+            payload: {token, result:{...data}}
+        })
+        
+    } catch (error) {
+        console.log(error.message)
     }
 }

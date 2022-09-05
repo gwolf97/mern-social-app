@@ -1,14 +1,27 @@
 import React from 'react'
 import axios from "axios"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {Avatar} from '@mui/material';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getUser, updateUserFile } from '../actions/userActions';
 
 const ProfileScreen = () => {
 
+const dispatch = useDispatch()
+const navigate = useNavigate()
 const user = useSelector(state => state.auth.authData)
+const profile = useSelector(state => state.profile )
+const {id} = useParams()
 
 const [uploading, setUploading] = React.useState(false)
-const [profileData, setProfileData] = React.useState({file:"../images/profileimg.jpg"})
+const [profileData, setProfileData] = React.useState({file:"", name:"", _id: id})
+
+
+React.useEffect(() => {
+    dispatch(getUser(id))
+    setProfileData({file: profile.file || "", name: profile.name || "", _id: id})
+
+}, [id, dispatch, profile])
 
 const uploadFileHandler = async (e) => {
     const file = e.target.files[0]
@@ -25,31 +38,29 @@ const uploadFileHandler = async (e) => {
 
         const {data} = await axios.post("http://localhost:5000/upload", formData, config)
 
-        setProfileData({file: data})
+        dispatch(updateUserFile(data))
         setUploading(false)
     } catch (error) {
         console.error(error)
         setUploading(false)
-        setProfileData({file:""})
+        setProfileData(prev => prev)
     }
   }
-
-  console.log(profileData)
 
   return (
     <>
     <section style={{width:"100vw", height:"80vh", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
     <Avatar sx={{width:300, height:300}} src={profileData.file} variant="contained"/>
-        <h3 style={{color:"#fefefe", marginTop:"40px"}} >{user.result.name.toUpperCase()}</h3>
+        <h3 style={{color:"#fefefe", marginTop:"40px"}} >{profileData.name.toUpperCase()}</h3>
     </section>
-    <section>
+    {id === user.result._id && (<section>
          <div className="image-upload">
             <label htmlFor="file-input">
               <i style={{cursor:"pointer", color:"#408BF7", fontSize:"12px", marginRight:"10px"}} className="fa-solid fa-image"> change profile picture</i>
             </label>
             <input id="file-input" type="file" multiple={false} onChange={uploadFileHandler} />
         </div>
-    </section>
+    </section>)}
     </>
 
 

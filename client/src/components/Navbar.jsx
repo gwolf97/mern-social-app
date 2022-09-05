@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from '../actions/userActions';
 import {isExpired} from "react-jwt"
+import { useParams } from 'react-router-dom';
 
 
 const Navbar = () => {
@@ -28,6 +29,9 @@ const id = open ? 'simple-popover' : undefined;
 const isTokenExpired = user === null ? "no token" : isExpired(user.token) 
 
 const auth = useSelector(state => state.auth)
+const params = useParams()
+
+console.log(params)
 
 const navigate = useNavigate()
 const dispatch = useDispatch()
@@ -42,6 +46,8 @@ React.useEffect(() => {
     if(auth.authData === null){
       navigate("/auth")
       return
+    }else if(params){
+      setProfileOpen(true)
     }else if(profileOpen){
       return
     }else if(auth.success){
@@ -75,7 +81,7 @@ const handleLogOut = () => {
             {user !== null && <Button disabled={user === null ? true : false} onClick={() => {navigate("/") ; setProfileOpen(false)}}><i style={{fontSize:"20px"}} className="fa-solid fa-house"></i></Button>}
             {user !== null && (
               <>
-              <Avatar aria-describedby={id} variant="contained" onClick={handleClick} style={{cursor:"pointer"}}></Avatar>
+              <Avatar src={user.result.file} aria-describedby={id} variant="contained" onClick={handleClick} style={{cursor:"pointer"}}></Avatar>
               <Popover
               id={id}
               open={open}

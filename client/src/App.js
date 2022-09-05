@@ -12,8 +12,8 @@ function App() {
   return (
     <Router>
       <Container maxWidth="lg">
-      <Navbar/>    
-      <Routes>  
+      <Navbar/> 
+      <Routes>     
           <Route path="/" element={<HomeScreen/>}/>
           <Route path="/profile/:id" element={<ProfileScreen/>}/>
           <Route path="/auth" element={<AuthScreen/>}/>
