@@ -18,6 +18,7 @@ const handleClick = (event) => {
 };
 
 const handleClose = () => {
+  setProfileOpen(false)
   setAnchorEl(null);
 };
 
