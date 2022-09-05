@@ -12,7 +12,7 @@ const Navbar = () => {
 const [user, setUser] = React.useState(JSON.parse(localStorage.getItem("profile")) || null)
 
 const [anchorEl, setAnchorEl] = React.useState(null);
-const [profileOpen, setProfileOpen] = React.useState(false)
+const [profileOpen, setProfileOpen] = React.useState(true)
 
 const handleClick = (event) => {
   setAnchorEl(event.currentTarget);

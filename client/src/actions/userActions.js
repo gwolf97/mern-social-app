@@ -1,6 +1,5 @@
 import axios from "axios"
-import { useNavigate } from "react-router-dom"
-import {AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAIL, LOGOUT, GET_USER, UPDATE_USER_FILE} from "../constants/userConstants"
+import {AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAIL, LOGOUT, UPDATE_USER_FILE, GET_USER_SUCCESS, GET_USER_REQUEST, GET_USER_FAIL} from "../constants/userConstants"
 
 
 
@@ -63,15 +62,22 @@ export const logOut = () => async (dispatch) =>{
 export const getUser = (id) => async (dispatch) =>{
     try {
 
+        dispatch({
+            type: GET_USER_REQUEST,
+        })
+
         const {data} = await axios.get(`http://localhost:5000/user/${id}`)
 
         dispatch({
-            type: GET_USER,
+            type: GET_USER_SUCCESS,
             payload: data
         })
         
     } catch (error) {
-        console.log(error.message)
+        dispatch({
+            type: GET_USER_FAIL,
+            payload: error.message
+        })
     }
 }
 

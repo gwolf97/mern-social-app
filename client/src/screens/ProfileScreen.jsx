@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import {Avatar} from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getUser, updateUserFile } from '../actions/userActions';
+import { SpinnerDotted } from 'spinners-react';
 
 const ProfileScreen = () => {
 
 const dispatch = useDispatch()
 const navigate = useNavigate()
 const user = useSelector(state => state.auth.authData)
-const profile = useSelector(state => state.profile )
+const profile = useSelector(state => state.profile.profile )
+const {loading} = useSelector(state => state.profile)
 const {id} = useParams()
 
 const [uploading, setUploading] = React.useState(false)
@@ -20,8 +22,7 @@ const [profileData, setProfileData] = React.useState({file:"", name:"", _id: id}
 React.useEffect(() => {
     dispatch(getUser(id))
     setProfileData({file: profile.file || "", name: profile.name || "", _id: id})
-
-}, [id, dispatch, profile])
+}, [id, dispatch, profile.file])
 
 const uploadFileHandler = async (e) => {
     const file = e.target.files[0]
@@ -50,8 +51,8 @@ const uploadFileHandler = async (e) => {
   return (
     <>
     <section style={{width:"100vw", height:"80vh", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-    <Avatar sx={{width:300, height:300}} src={profileData.file} variant="contained"/>
-        <h3 style={{color:"#fefefe", marginTop:"40px"}} >{profileData.name.toUpperCase()}</h3>
+    {loading ? <SpinnerDotted color="#408df7"/> : (<><Avatar sx={{width:300, height:300}} src={profileData.file} variant="contained"/>
+        <h3 style={{color:"#fefefe", marginTop:"40px"}} >{profileData.name.toUpperCase()}</h3></>)}
     </section>
     {id === user.result._id && (<section>
          <div className="image-upload">

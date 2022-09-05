@@ -1,4 +1,4 @@
-import {AUTH_FAIL, AUTH_REQUEST, AUTH_SUCCESS, GET_USER, LOGOUT, UPDATE_USER_FILE} from "../constants/userConstants"
+import {AUTH_FAIL, AUTH_REQUEST, AUTH_SUCCESS, GET_USER, GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, LOGOUT, UPDATE_USER_FILE} from "../constants/userConstants"
 
 export const authReducer = (state = {authData: null}, action) => {
     switch (action.type){
@@ -21,10 +21,14 @@ export const authReducer = (state = {authData: null}, action) => {
     }
 }
 
-export const profileReducer = (state = {file:"", name:"", _id:""}, action) => {
+export const profileReducer = (state = {profile: {file:"", name:"", _id:""}}, action) => {
     switch (action.type){
-        case GET_USER:
-            return action.payload
+        case GET_USER_REQUEST:
+            return {loading: true, profile: {...state.profile}}
+        case GET_USER_SUCCESS:
+            return {loading: false, profile: action.payload}
+        case GET_USER_FAIL:
+            return {loading:false, error:action.payload}
         default:
             return state
     }
