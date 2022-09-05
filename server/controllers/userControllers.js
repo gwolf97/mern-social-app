@@ -26,7 +26,6 @@ export const signin = asyncHandler(async(req,res) =>{
     })
 
 export const signup = asyncHandler(async(req,res) =>{
-    console.log(req.body)
     const {email, password, confirmPassword, userName}  = req.body   
 
     try {

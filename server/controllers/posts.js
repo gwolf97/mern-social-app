@@ -85,8 +85,6 @@ const createComment = asyncHandler(async (req, res) => {
     const {comment: newComment} = req.body
     const {id:_id} = req.params
 
-    console.log(req.body, req.userId)
-
     const user = await User.findById(req.userId)
 
     const post = await PostMessage.findById(_id)
