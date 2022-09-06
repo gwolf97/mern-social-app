@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardActions, CardContent, Button, Typography, Menu, MenuItem} from '@mui/material';
+import axios from "axios"
+import { Card, CardActions, CardContent, Button, Typography, Menu, MenuItem, Avatar} from '@mui/material';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import DeleteModal from './DeleteModal';
@@ -11,6 +12,7 @@ const Post = ({ post, disable }) => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [openModal, setOpenModal] = React.useState(false);
   const [openComment, setOpenComment] = React.useState(false)
+  const [profileData, setProfileData] = React.useState({file:""})
  
   const open = Boolean(anchorEl);
   const handleOpenModal = () => {setOpenModal(true) ; dispatch(setCurrentID(post._id))};
@@ -21,6 +23,18 @@ const Post = ({ post, disable }) => {
   const dispatch = useDispatch()
   const loggedInUserData = useSelector(state =>  state.auth.authData.result)
   const {_id} = loggedInUserData
+
+
+
+  React.useEffect(() => {
+    const getData = async () => {
+      const {data} = await axios.get(`http://localhost:5000/user/${post.creator}`)
+      setProfileData(data)
+    }
+    getData()
+  }, [])
+
+  console.log(profileData)
 
   const handleEdit = () => {
     setAnchorEl(null)
@@ -44,9 +58,9 @@ const Post = ({ post, disable }) => {
   
 
   return (
-    <Card style={{background:"#2B2D2E", color:"#FEFEFE"}}>
+    <Card style={{background:"#2B2D2E", color:"#FEFEFE", width:"100%"}}>
       <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0 10px 10px"}}>
-        <Typography variant="h6">{post.name.split(" ")[0].toLowerCase()}</Typography>
+        <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}> <Avatar src={profileData.file}/>  <Typography style={{marginLeft:"5px", fontSize:"14px", fontWeight:"600"}} variant="h6">{post.name.split(" ")[0].toLowerCase()}</Typography></div>
         {_id === post.creator && <Button disabled={disable} onClick={e => setAnchorEl(e.currentTarget)} style={{color:"#FEFEFE"}}><i style={{ borderRadius:"50%", cursor:"pointer"}} className='fa-solid fa-ellipsis'></i></Button>}
         <Menu
         id="long-menu"
@@ -80,7 +94,7 @@ const Post = ({ post, disable }) => {
       <img style={{ maxWidth:"98%", margin:"auto", borderRadius:"1%"}} src={post.file} alt="" />
       </div>
       <CardContent>
-        <Typography style={{marginTop:"-5px"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{post.name.split(" ")[0].toLowerCase()}</span> {post.message}</Typography>
+            <Typography style={{marginTop:"-5px"}} variant="body2" component="p"><span style={{fontWeight:"700"}} >{post.name.split(" ")[0].toLowerCase()}</span> {post.message}</Typography>
         <div style={{marginTop:"5px", marginBottom:"-20px"}} >
           <Typography variant="body2" color="primary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
           <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>

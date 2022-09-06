@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from "axios"
-import { TextField, Button, Paper, CircularProgress, Typography } from '@mui/material';
+import { TextField, Button, Paper, CircularProgress, Typography, Avatar } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { createPost, getPosts, updatePost, setCurrentID, setSkip } from '../actions/postActions';
 
@@ -78,7 +78,7 @@ const Form = () => {
   return (
     <Paper style={{background:"#2B2D2E", color:"#FEFEFE"}} sx={{margin:"20px 0"}}>
       <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Typography  style={{padding:"5px 0", marginLeft:"13px"}}>{name.toLowerCase()}</Typography>
+       <div style={{display:"flex", alignItems:"center", justifyContent:"start", padding:"10px 8px"}} > <Avatar src={user.result.file}/> <Typography  style={{marginLeft:"5px", fontSize:"14px", fontWeight:"600"}}>{name.toLowerCase()}</Typography></div>
         {uploading ? <CircularProgress/> : <div style={{display:"flex", justifyContent:"center", alignItems:"center"}}><img style={{ maxWidth:"98%", margin:"auto", borderRadius:"1%"}} src={postData.file} alt="" /></div>}
         <TextField placeholder="message" inputProps={{ style: { color: "#FEFEFE"} , maxLength: 280}} name="message" variant="outlined" fullWidth multiline rows={4} value={postData.message} onChange={(e) => setPostData({ ...postData, message: e.target.value })} />
         <TextField InputLabelProps={{style: { color: "#FEFEFE" } }} inputProps={{ style: { color: "#FEFEFE" }, maxLength: 50 }} name="tags" variant="outlined" label="Tags (coma separated)" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
