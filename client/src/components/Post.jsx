@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import DeleteModal from './DeleteModal';
 import { deletePost, getPosts, likePost, setCurrentID, setSkip } from '../actions/postActions';
 import CommentModal from './CommentModal';
+import { useNavigate } from 'react-router-dom';
 
 const Post = ({ post, disable }) => {
 
@@ -20,6 +21,7 @@ const Post = ({ post, disable }) => {
   const handleOpenComment = () => {setOpenComment(true)};
   const handleCloseComment = () => {setOpenComment(false)}
 
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const loggedInUserData = useSelector(state =>  state.auth.authData.result)
   const {_id} = loggedInUserData
@@ -33,8 +35,6 @@ const Post = ({ post, disable }) => {
     }
     getData()
   }, [])
-
-  console.log(profileData)
 
   const handleEdit = () => {
     setAnchorEl(null)
@@ -60,7 +60,7 @@ const Post = ({ post, disable }) => {
   return (
     <Card style={{background:"#2B2D2E", color:"#FEFEFE", width:"100%"}}>
       <div style={{display:"flex", justifyContent:"space-between", padding:"10px 0 10px 10px"}}>
-        <div style={{display:"flex", alignItems:"center", justifyContent:"center"}}> <Avatar src={profileData.file}/>  <Typography style={{marginLeft:"5px", fontSize:"14px", fontWeight:"600"}} variant="h6">{post.name.split(" ")[0].toLowerCase()}</Typography></div>
+        <div onClick={() => navigate(`/profile/${post.creator}`)} style={{display:"flex", alignItems:"center", justifyContent:"center", cursor:"pointer"}}> <Avatar src={profileData.file}/>  <Typography style={{marginLeft:"5px", fontSize:"14px", fontWeight:"600"}} variant="h6">{post.name.split(" ")[0].toLowerCase()}</Typography></div>
         {_id === post.creator && <Button disabled={disable} onClick={e => setAnchorEl(e.currentTarget)} style={{color:"#FEFEFE"}}><i style={{ borderRadius:"50%", cursor:"pointer"}} className='fa-solid fa-ellipsis'></i></Button>}
         <Menu
         id="long-menu"
