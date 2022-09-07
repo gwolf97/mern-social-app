@@ -36,7 +36,7 @@ const SearchScreen = () => {
           </div>
 
           { users.map(user => (
-            <div onClick={() => navigate(`/profile/${user._id}`)} style={{display:"flex", justifyContent:"start", alignItems:"center", width:"350px", padding:"10px 10px", border:"1px solid rgba(63,140,247,.5)", borderRadius:"5px", cursor:"pointer"}} key={user._id}>
+            <div onClick={() => navigate(`/profile/${user._id}`)} style={{display:"flex", justifyContent:"start", alignItems:"center", width:"350px", padding:"10px 10px", marginBottom:"10px", border:"1px solid rgba(63,140,247,.5)", borderRadius:"5px", cursor:"pointer"}} key={user._id}>
               <Avatar src={user.file}/> <h3 style={{marginLeft:"10px"}}>{user.name}</h3>
             </div>
           ))}

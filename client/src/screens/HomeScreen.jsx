@@ -22,6 +22,7 @@ const HomeScreen = () => {
   const handleScroll = () => {
       dispatch(setSkip(skip + 3))
       dispatch(loadMore(skip))
+      window.scrollBy(0, -25);
   }
 
  useBottomScrollListener(handleScroll);
