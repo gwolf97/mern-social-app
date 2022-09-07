@@ -10,7 +10,7 @@ const Navbar = () => {
 const [user, setUser] = React.useState(JSON.parse(localStorage.getItem("profile")) || null)
 
 const [anchorEl, setAnchorEl] = React.useState(null);
-const [profileOpen, setProfileOpen] = React.useState(true)
+const [profileOpen, setProfileOpen] = React.useState(false)
 
 const handleClick = (event) => {
   setAnchorEl(event.currentTarget);
@@ -44,6 +44,7 @@ React.useEffect(() => {
       return
     }else if(auth.success){
       navigate("/")
+      setProfileOpen(true)
       return
     }else if(auth.error){
       navigate("/auth")
@@ -61,6 +62,8 @@ const handleProfile = () => {
 
 const handleLogOut = () => {
     dispatch(logOut())
+
+    setProfileOpen(false)
 
     navigate("/auth")
 

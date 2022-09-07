@@ -1,5 +1,5 @@
 import axios from "axios"
-import {AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAIL, LOGOUT, UPDATE_USER_FILE, GET_USER_SUCCESS, GET_USER_REQUEST, GET_USER_FAIL} from "../constants/userConstants"
+import {AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAIL, LOGOUT, UPDATE_USER_FILE, GET_USER_SUCCESS, GET_USER_REQUEST, GET_USER_FAIL, GET_USERS_REQUEST, GET_USERS_SUCCESS, GET_USERS_FAIL, CLEAR_SEARCH} from "../constants/userConstants"
 
 
 
@@ -58,6 +58,38 @@ export const logOut = () => async (dispatch) =>{
     }
 }
 
+
+export const getUsers = (keyword) => async (dispatch) =>{
+    try {
+
+        dispatch({
+            type: GET_USERS_REQUEST,
+        })
+
+        const {data} = await axios.get(`http://localhost:5000/user?keyword=${keyword}`)
+
+        dispatch({
+            type: GET_USERS_SUCCESS,
+            payload: data
+        })
+        
+    } catch (error) {
+        dispatch({
+            type: GET_USERS_FAIL,
+            payload: error.message
+        })
+    }
+}
+
+export const clearSearch = () => (dispatch) =>{
+    try {
+        dispatch({
+            type: CLEAR_SEARCH
+        })
+    } catch (error){
+        console.log(error.message)
+    }
+}
 
 export const getUser = (id) => async (dispatch) =>{
     try {
