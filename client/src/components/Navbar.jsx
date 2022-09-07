@@ -17,7 +17,6 @@ const handleClick = (event) => {
 };
 
 const handleClose = () => {
-  setProfileOpen(false)
   setAnchorEl(null);
 };
 
@@ -72,6 +71,7 @@ const handleLogOut = () => {
     <AppBar style={{background:"#1B1A1D", color:"#FEFEFE", display:"flex"}} position="static" color="inherit">
         <Toolbar style={{display:"flex", justifyContent:"space-around"}}>
             {user !== null && <Button disabled={user === null ? true : false} onClick={() => {navigate("/")}}><i style={{fontSize:"20px"}} className="fa-solid fa-house"></i></Button>}
+            {user !== null && <Button disabled={user === null ? true : false} onClick={() => {navigate("/search")}}><i style={{fontSize:"20px"}} className="fa-solid fa-magnifying-glass"></i></Button> }
             {user !== null && (
               <>
               <Avatar src={user.result.file} aria-describedby={id} variant="contained" onClick={handleClick} style={{cursor:"pointer"}}></Avatar>

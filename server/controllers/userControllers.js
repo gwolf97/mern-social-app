@@ -50,6 +50,19 @@ export const signup = asyncHandler(async(req,res) =>{
     
     })
 
+export const getUsers = asyncHandler(async(req,res) =>{
+        const keyword = req.query.keyword? {
+            name: {
+                $regex: req.query.keyword,
+                $options: "i"
+            }
+        } : {}
+
+        const users = await User.find({...keyword})
+        
+        res.json(users)
+        })
+
 export const getUser = asyncHandler(async(req,res) =>{
         const {id} = req.params
         const user = await User.findOne({_id: id})
