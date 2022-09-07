@@ -1,5 +1,19 @@
 {
+  "name": "mern-landing-page",
+  "version": "1.0.0",
+  "description": "MERN landing page app",
+  "engines": {
+    "node": "16.15.1"
+  },
+  "main": "server.js",
   "type": "module",
+  "scripts": {
+    "install-client": "cd .. && cd client && npm install --legacy-peer-deps",
+    "build": "cd .. && cd client && npm run build",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install-client && npm run build --prefix client"
+    },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",

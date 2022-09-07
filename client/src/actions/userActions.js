@@ -28,7 +28,7 @@ export const signIn = (formData) => async (dispatch) =>{
     try {
         dispatch({type:AUTH_REQUEST})
 
-       const {data} = await axios.post("http://localhost:5000/user/signin", formData)
+       const {data} = await axios.post("/user/signin", formData)
 
        dispatch({type:AUTH_SUCCESS, payload: data})
     } catch (error) {
@@ -41,7 +41,7 @@ export const signUp = (formData) => async (dispatch) =>{
     try {
         dispatch({type:AUTH_REQUEST})
 
-       const {data} = await axios.post("http://localhost:5000/user/signup", formData)
+       const {data} = await axios.post("/user/signup", formData)
 
        dispatch({type:AUTH_SUCCESS, payload: data})
 
@@ -66,7 +66,7 @@ export const getUsers = (keyword) => async (dispatch) =>{
             type: GET_USERS_REQUEST,
         })
 
-        const {data} = await axios.get(`http://localhost:5000/user?keyword=${keyword}`)
+        const {data} = await axios.get(`/user?keyword=${keyword}`)
 
         dispatch({
             type: GET_USERS_SUCCESS,
@@ -98,7 +98,7 @@ export const getUser = (id) => async (dispatch) =>{
             type: GET_USER_REQUEST,
         })
 
-        const {data} = await axios.get(`http://localhost:5000/user/${id}`)
+        const {data} = await axios.get(`/user/${id}`)
 
         dispatch({
             type: GET_USER_SUCCESS,
@@ -124,7 +124,7 @@ export const updateUserFile = (file) => async (dispatch) =>{
             }
         }
 
-        const {data} = await axios.patch(`http://localhost:5000/user/profilepic`, {file: file}, config)
+        const {data} = await axios.patch(`/user/profilepic`, {file: file}, config)
 
         dispatch({
             type: UPDATE_USER_FILE,

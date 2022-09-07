@@ -30,7 +30,7 @@ const Post = ({ post, disable }) => {
 
   React.useEffect(() => {
     const getData = async () => {
-      const {data} = await axios.get(`http://localhost:5000/user/${post.creator}`)
+      const {data} = await axios.get(`/user/${post.creator}`)
       setProfileData(data)
     }
     getData()

@@ -46,7 +46,7 @@ const Form = () => {
             }
         }
 
-        const {data} = await axios.post("http://localhost:5000/upload", formData, config)
+        const {data} = await axios.post("/upload", formData, config)
 
         setPostData({...postData, file: data})
         setUploading(false)

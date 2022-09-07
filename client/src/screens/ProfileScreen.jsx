@@ -37,7 +37,7 @@ const uploadFileHandler = async (e) => {
             }
         }
 
-        const {data} = await axios.post("http://localhost:5000/upload", formData, config)
+        const {data} = await axios.post("/upload", formData, config)
 
         dispatch(updateUserFile(data))
         setUploading(false)
