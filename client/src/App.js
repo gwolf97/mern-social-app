@@ -15,9 +15,9 @@ function App() {
       <Container maxWidth="lg">
       <Navbar/> 
       <Routes>     
-          <Route path="/home" element={<HomeScreen/>}/>
+          <Route path="/" element={<HomeScreen/>}/>
           <Route path="/profile/:id" element={<ProfileScreen/>}/>
-          <Route path="/" element={<AuthScreen/>}/>
+          <Route path="/auth" element={<AuthScreen/>}/>
           <Route path="/search" element={<SearchScreen/>}/>
       </Routes>
       </Container>

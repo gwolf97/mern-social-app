@@ -28,9 +28,9 @@ const AuthScreen = () => {
        try {
         dispatch(auth(response, token))
 
-        navigate("/home")
+        navigate("/")
        } catch (error) {
-            navigate("/")
+            navigate("/auth")
             console.log(error)
        }
     }
