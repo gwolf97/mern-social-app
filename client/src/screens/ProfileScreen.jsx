@@ -12,7 +12,6 @@ const dispatch = useDispatch()
 const navigate = useNavigate()
 const user = useSelector(state => state.auth.authData)
 const profile = useSelector(state => state.profile.profile )
-const {loading} = useSelector(state => state.profile)
 const {id} = useParams()
 
 const [uploading, setUploading] = React.useState(false)
@@ -52,7 +51,7 @@ const uploadFileHandler = async (e) => {
   return (
     <>
     <section style={{width:"100vw", height:"80vh", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-    {loading ? <SpinnerDotted color="#408df7"/> : (<><Avatar sx={{width:300, height:300}} src={profileData.file} variant="contained"/>
+    {uploading ? <SpinnerDotted color="#408df7"/> : (<><Avatar sx={{width:300, height:300}} src={profileData.file} variant="contained"/>
         <h3 style={{color:"#fefefe", marginTop:"40px"}} >{profileData.name.toUpperCase()}</h3></>)}
     </section>
     {id === user.result._id && (<section>
