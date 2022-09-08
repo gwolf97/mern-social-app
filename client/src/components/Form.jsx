@@ -66,6 +66,7 @@ const Form = () => {
       }else{
         dispatch(createPost({...postData, name: user.result.name}))
         clear()
+        dispatch(getPosts())
       }
   };
 
