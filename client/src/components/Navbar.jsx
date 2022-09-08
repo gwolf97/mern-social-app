@@ -34,23 +34,23 @@ React.useEffect(() => {
     setUser(JSON.parse(localStorage.getItem("profile")))
 
     if(isTokenExpired){
-      navigate("/auth")
+      navigate("/")
     }
 
     if(auth.authData === null){
-      navigate("/auth")
+      navigate("/")
       return
     }else if(profileOpen){
       return
     }else if(auth.success){
-      navigate("/")
+      navigate("/home")
       setProfileOpen(true)
       return
     }else if(auth.error){
-      navigate("/auth")
+      navigate("/")
       return
     }else{
-      navigate("/")
+      navigate("/home")
     }
 
 }, [navigate, auth.authData, isTokenExpired])
@@ -65,7 +65,7 @@ const handleLogOut = () => {
 
     setProfileOpen(false)
 
-    navigate("/auth")
+    navigate("/")
 
     setUser(null)
 }
@@ -73,7 +73,7 @@ const handleLogOut = () => {
   return (
     <AppBar style={{background:"#1B1A1D", color:"#FEFEFE", display:"flex"}} position="static" color="inherit">
         <Toolbar style={{display:"flex", justifyContent:"space-around"}}>
-            {user !== null && <Button disabled={user === null ? true : false} onClick={() => {navigate("/")}}><i style={{fontSize:"20px"}} className="fa-solid fa-house"></i></Button>}
+            {user !== null && <Button disabled={user === null ? true : false} onClick={() => {navigate("/home")}}><i style={{fontSize:"20px"}} className="fa-solid fa-house"></i></Button>}
             {user !== null && <Button disabled={user === null ? true : false} onClick={() => {navigate("/search")}}><i style={{fontSize:"20px"}} className="fa-solid fa-magnifying-glass"></i></Button> }
             {user !== null && (
               <>

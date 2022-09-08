@@ -41,7 +41,7 @@ const uploadFileHandler = async (e) => {
 
         dispatch(updateUserFile(data))
         setUploading(false)
-        navigate("/")
+        navigate("/home")
     } catch (error) {
         console.error(error)
         setUploading(false)
