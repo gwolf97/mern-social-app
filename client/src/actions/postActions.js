@@ -9,7 +9,7 @@ export const getPosts = () => async (dispatch) =>{
             type: CLEAR_POSTS
         })
 
-        const {data} = await axios.get("https://wolf-mern-social-app.herokuapp.com/posts",  {params: 0})
+        const {data} = await axios.get("/posts",  {params: 0})
 
         dispatch({
             type: GET_POSTS_SUCCESS,
@@ -31,7 +31,7 @@ export const loadMore = (skip) => async (dispatch) =>{
             type: LOAD_MORE_POSTS_REQUEST
         })
 
-        const {data} = await axios.get("https://wolf-mern-social-app.herokuapp.com/posts",  {params: { skip: skip } })
+        const {data} = await axios.get("/posts",  {params: { skip: skip } })
 
         dispatch({
             type: LOAD_MORE_POSTS_SUCCESS,
@@ -59,7 +59,7 @@ export const createPost = (postData) => async (dispatch) =>{
             }
         }
 
-        const {data} = await axios.post("https://wolf-mern-social-app.herokuapp.com/posts", postData, config)
+        const {data} = await axios.post("/posts", postData, config)
 
         dispatch({
             type: CREATE_POST_SUCCESS,
@@ -87,7 +87,7 @@ export const updatePost = (currentID, postData) => async (dispatch) =>{
             }
         }
 
-        const {data} = await axios.patch(`https://wolf-mern-social-app.herokuapp.com/posts/${currentID}`, postData, config)
+        const {data} = await axios.patch(`/posts/${currentID}`, postData, config)
 
         dispatch({
             type: UPDATE_POST_SUCCESS,
@@ -115,7 +115,7 @@ export const deletePost = (currentID) => async (dispatch) =>{
             }
         }
 
-        await axios.delete(`https://wolf-mern-social-app.herokuapp.com/posts/${currentID}`, config)
+        await axios.delete(`/posts/${currentID}`, config)
 
         dispatch({
             type: DELETE_POST_SUCCESS
@@ -140,7 +140,7 @@ export const likePost = (currentID) => async (dispatch) =>{
             }
         }
 
-        const {data} = await axios.patch(`https://wolf-mern-social-app.herokuapp.com/posts/${currentID}/like`, config)
+        const {data} = await axios.patch(`/posts/${currentID}/like`, config)
 
         dispatch({
             type: LIKE,
@@ -165,7 +165,7 @@ export const createComment = (postId, comment) => async (dispatch) =>{
             }
         }
 
-        const {data} = await axios.post(`https://wolf-mern-social-app.herokuapp.com/posts/${postId}/comments`, comment, config)
+        const {data} = await axios.post(`/posts/${postId}/comments`, comment, config)
 
         dispatch({
             type: CREATE_COMMENT,
@@ -190,7 +190,7 @@ export const deleteComment = (postId, commentId) => async (dispatch) =>{
             }
         }
 
-        const {data} = await axios.delete(`https://wolf-mern-social-app.herokuapp.com/posts/${postId}/${commentId}/comments`, config)
+        const {data} = await axios.delete(`/posts/${postId}/${commentId}/comments`, config)
 
         dispatch({
             type: DELETE_COMMENT,
