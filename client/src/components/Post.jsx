@@ -30,7 +30,7 @@ const Post = ({ post, disable }) => {
 
   React.useEffect(() => {
     const getData = async () => {
-      const {data} = await axios.get(`/user/${post.creator}`)
+      const {data} = await axios.get(`https://wolf-mern-social-app.herokuapp.com/user/${post.creator}`)
       setProfileData(data)
     }
     getData()
