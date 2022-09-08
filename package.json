@@ -1,22 +1,26 @@
 {
-  "name": "mern-landing-page",
+  "name": "mern-social-app",
   "version": "1.0.0",
-  "description": "MERN landing page app",
+  "description": "MERN social app",
   "engines": {
     "node": "16.15.1"
   },
-  "main": "server.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "install-client": "cd .. && cd client && npm install --legacy-peer-deps",
-    "build": "cd .. && cd client && npm run build",
-    "start": "node index.js",
+    "install-client": "cd client && npm install --legacy-peer-deps",
+    "build": "cd client && npm run build",
+    "start": "node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server/index",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "npm start --prefix client",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm run install-client && npm run build --prefix client"
     },
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.20.0",
+    "concurrently": "^7.3.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
